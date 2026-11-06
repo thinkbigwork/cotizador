@@ -7,10 +7,21 @@
    carga— y busca cualquier rastro del modelo de comisiones.
    ========================================================================== */
 
-import test from 'node:test';
+import base from 'node:test';
 import assert from 'node:assert/strict';
 
 const BASE = process.env.TEST_BASE_URL || 'http://127.0.0.1:3100';
+
+/* Estas pruebas necesitan la aplicación corriendo: descargan páginas reales y
+   sus scripts. Si el servidor no está, se saltean con un aviso en lugar de
+   fallar — un test que no se puede ejecutar no es un test roto. */
+const servidorArriba = await fetch(BASE + '/ventas', { method: 'HEAD' })
+  .then(() => true)
+  .catch(() => false);
+
+const test = servidorArriba
+  ? base
+  : (nombre) => base.skip(`${nombre} — levantá el servidor con 'npm run dev' y volvé a correr`);
 
 /* Identificadores que solo existen en el módulo de comisiones. Si alguno
    aparece en lo que recibe el navegador, el módulo se empaquetó por error. */
