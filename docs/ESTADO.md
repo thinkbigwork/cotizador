@@ -35,7 +35,13 @@ cotizador está en prueba con el equipo interno, la clave alcanza para
 `/ventas` y `/ventas/comision` (la comisión no muestra nombre). El back office
 sigue exigiendo un usuario identificado y no abre en producción.
 
-51 tests en verde.
+**Guía del cotizador** en `/`, en español, inglés y portugués. El contenido
+está en `docs/guia/*.md` y las cifras salen del catálogo publicado. Incluye
+una sección de versiones: las del catálogo se listan solas y las del
+cotizador se agregan con cada PR. Es interna y muestra el modelo comercial
+completo, por decisión de Wizor.
+
+59 tests en verde (51 sin servidor más 8 de separación).
 
 ---
 
@@ -58,7 +64,9 @@ sigue exigiendo un usuario identificado y no abre en producción.
 5. **Stripe**: checkout, cobro de señas, webhooks con idempotencia
    (`stripe_events` ya está), impuestos y registro de aceptación del plazo de
    12 meses.
-6. **Landing** con los tres accesos.
+6. **Landing** con los tres accesos. La raíz hoy es la guía interna, que
+   muestra el modelo comercial: la landing pública no puede reemplazarla sin
+   antes mover o recortar la guía.
 7. **Bandeja de solicitudes** (`requests`): preventa, sin cargo y demo.
 8. **API de alta de cuentas.** Wizor la tiene prevista para fines de noviembre.
    Hasta entonces el pago deja un pendiente en `provisioning_jobs` que alguien
@@ -76,6 +84,7 @@ Ninguna bloquea el trabajo, pero todas necesitan que Wizor las confirme.
 | Wizor 360 sin equipamiento | Se bloquea la contratación (`checkout.mode = incomplete`). Deriva de que sin sensores instalados el servicio no funciona, pero no está confirmado que no exista el caso de una empresa con equipos previos. |
 | Paneles de Control | Se pueden comprar varios del mismo tipo y no son excluyentes entre sí. Decisión por defecto. |
 | Plazo de alta tras el pago | La pantalla de confirmación tiene que prometer un plazo concreto, porque el alta es manual hasta que exista la API. Falta definir cuál. |
+| Programa fundador: cupos y cierre | El catálogo dice **10 cupos por país** y sin fecha de cierre (`seatsPerCountry`, `activeUntil: null`). El cotizador (`fP` y `fS` en `i18n.js`) dice "Diez organizaciones" y "cierra en 2026". La guía sigue al catálogo. Falta confirmar cuál vale. |
 | Facturación local | Wizor planea registrarse en México, Brasil y Uruguay, y ya puede facturar desde Argentina. Hoy todo se cobra desde la INC de EEUU vía Stripe. |
 
 ### Fuera de alcance

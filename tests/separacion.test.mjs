@@ -98,6 +98,21 @@ test('el módulo de comisiones no se empaqueta en el cotizador', async () => {
   }
 });
 
+test('la guía (/) tampoco empaqueta comisiones', async () => {
+  /* La guía muestra el modelo de precios a propósito (es interna), pero un
+     vendedor puede mostrársela a un cliente: comisiones, nunca. */
+  for (const ruta of ['/', '/?lang=en', '/?lang=pt']) {
+    const { todo } = await descargarTodo(ruta);
+    const filtrados = IDENTIFICADORES.filter((id) => todo.includes(id));
+    assert.deepEqual(filtrados, [], `${ruta} recibió código de comisiones: ${filtrados.join(', ')}`);
+    const tasas = TASAS_DISTINTIVAS.filter((tasa) => {
+      const re = new RegExp(`(^|[^\\d.])${tasa.replace('.', '\\.')}([^\\d]|$)`);
+      return re.test(todo);
+    });
+    assert.deepEqual(tasas, [], `${ruta} contiene tasas de comisión: ${tasas.join(', ')}`);
+  }
+});
+
 test('la vista de comisión sí la tiene, para probar que el test sirve', async () => {
   /* Control negativo: si este test pasara también en /ventas, el anterior
      no estaría comprobando nada. */

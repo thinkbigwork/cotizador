@@ -36,6 +36,13 @@ manda la configuración a `/api/quote` y recibe números.
 nombres, precios de equipamiento y qué productos existen. Si agregás un campo
 ahí, preguntate si revela cómo se calcula el precio.
 
+**Excepción deliberada: la guía (`/`).** Muestra curvas, factores, bandas y
+mínimo, armados en el servidor desde el catálogo. Lo decidió Wizor el 6 de
+noviembre de 2026 porque la guía es solo para el equipo interno y vive detrás
+del portero. Es una página de lectura: el motor sigue sin viajar al
+navegador. **Antes de abrir el sitio o la raíz al público, la guía se mueve o
+se recorta.**
+
 ### 3 · Las comisiones no están en el cotizador
 
 No ocultas: **ausentes**. Un vendedor puede estar mostrando `/ventas` sentado al
@@ -74,11 +81,28 @@ camino antes que completar con una suposición.
   producción. Es deliberado: una variable que falta no puede convertirse en un
   sitio público o en una base en memoria que se borra sola.
 
+## La guía se mantiene con cada cambio
+
+`docs/guia/{es,en,pt}.md` es la guía del cotizador que se ve en `/`. **Todo
+cambio que altere cómo se cotiza, se vende o se usa la herramienta actualiza
+los tres archivos en el mismo PR** y suma una fila arriba de todo en la tabla
+"Versiones · Cotizador". Las versiones del catálogo se listan solas desde la
+base.
+
+- **Ninguna cifra a mano.** Importes, porcentajes, plazos y cupos van como
+  marcadores (`{{minimo}}`, `{{tabla.bandas}}`) que resuelve
+  `lib/guia/marcadores.js` con el catálogo publicado. Un marcador nuevo se
+  agrega ahí.
+- **Los tres idiomas dicen lo mismo**: mismos marcadores y mismas secciones.
+  `tests/guia.test.mjs` lo verifica, junto con que no haya importes escritos a
+  mano.
+- **Nada de comisiones**, igual que en `/ventas`.
+
 ## Tests
 
 ```bash
-npm test                               # 44 pruebas
-node --test tests/separacion.test.mjs  # 7, necesita el servidor levantado
+npm test                               # 51 pruebas (8 se saltean sin servidor)
+node --test tests/separacion.test.mjs  # 8, necesita el servidor levantado
 ```
 
 Con el portero activo, el test necesita `SITE_PASSWORD` en el entorno; sin
@@ -107,6 +131,7 @@ desarrollar con el servidor levantado, usá un Postgres de verdad.
 
 ```
 app/
+  page.js            guía del cotizador (/) · lee docs/guia · sin comisiones
   ventas/            cotizador de vendedores · sin comisiones
   ventas/comision/   única ruta que importa el módulo de comisiones
   admin/catalogo/    back office del catálogo
@@ -115,8 +140,10 @@ app/
 lib/
   pricebook/   schema · seed-v1 · diff · repo
   pricing/     engine · commissions · public-catalog
+  guia/        marcadores · render · textos
   db.js  auth.js  i18n.js
 db/migrations/  SQL numerado, se aplica en orden
+docs/guia/      contenido de la guía, en es · en · pt
 ```
 
 ## Reglas del producto que el código hace cumplir
