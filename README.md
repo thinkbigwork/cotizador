@@ -104,6 +104,10 @@ npm test                              # modelo, motor, catálogo, comisiones
 node --test tests/separacion.test.mjs  # requiere el servidor levantado
 ```
 
+Si el servidor tiene `SITE_PASSWORD`, pasásela al test (por ejemplo
+`SITE_PASSWORD=... TEST_BASE_URL=http://localhost:3000 node --test tests/separacion.test.mjs`).
+Sin la clave los pedidos terminan en `/acceso` y el test falla, a propósito.
+
 La prueba más importante compara el motor actual contra una copia del anterior
 sobre 39.744 combinaciones: ningún cambio de código puede mover un precio sin
 que falle.
