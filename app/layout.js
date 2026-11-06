@@ -1,5 +1,6 @@
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+import { idiomaActual } from '../lib/idioma.js';
 
 /* La tipografía de sales.wizor.io. next/font la descarga al compilar y la
    sirve desde este mismo dominio: el navegador no le pide nada a Google, y la
@@ -18,9 +19,9 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
-    <html lang="es" className={montserrat.variable}>
+    <html lang={await idiomaActual()} className={montserrat.variable}>
       <body>{children}</body>
     </html>
   );
