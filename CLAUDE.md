@@ -69,9 +69,15 @@ camino antes que completar con una suposición.
 
 ## Cómo se trabaja acá
 
-- **Español** en todo: interfaz, comentarios, mensajes de commit, nombres de
+- **Español** en el código: comentarios, mensajes de commit, nombres de
   variables de dominio (`seña`, `acumulado`, `borrador`). El inglés queda para
   las APIs y lo que ya viene en inglés.
+- **La pantalla, en tres idiomas.** Todo texto visible existe en español,
+  inglés y portugués, con las mismas claves (`tests/idiomas.test.mjs`). Cada
+  pantalla tiene su `textos.js` al lado; los del cotizador del navegador van
+  en `lib/i18n.js`. Los de la comisión, **solo** en `app/ventas/comision/`. El
+  idioma lo elige el selector ES·EN·PT y lo guarda el portero en una cookie
+  (`lib/idioma.js`); ninguna página lo fija a mano.
 - **Comentarios que explican por qué**, no qué. Si una línea es rara, el
   comentario dice qué pasa si se "arregla".
 - **Nada de secretos en el repositorio.** Solo `.env.example`, con los nombres
@@ -101,7 +107,7 @@ base.
 ## Tests
 
 ```bash
-npm test                               # 51 pruebas (8 se saltean sin servidor)
+npm test                               # 55 pruebas (8 se saltean sin servidor)
 node --test tests/separacion.test.mjs  # 8, necesita el servidor levantado
 ```
 
@@ -141,7 +147,7 @@ lib/
   pricebook/   schema · seed-v1 · diff · repo
   pricing/     engine · commissions · public-catalog
   guia/        marcadores · render · textos
-  db.js  auth.js  i18n.js
+  db.js  auth.js  i18n.js  idioma.js
 db/migrations/  SQL numerado, se aplica en orden
 docs/guia/      contenido de la guía, en es · en · pt
 ```

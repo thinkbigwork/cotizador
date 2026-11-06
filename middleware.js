@@ -14,10 +14,37 @@
    ========================================================================== */
 
 import { NextResponse } from 'next/server';
+import { COOKIE_IDIOMA, idiomaValido } from './lib/idioma.js';
 
 const COOKIE = 'wizor_acceso';
 
 export function middleware(request) {
+  /* Se lee antes de llamar al portero: seguir() escribe la cookie en el
+     pedido, y después ya no se distingue si el navegador la tenía. */
+  const lang = idiomaValido(request.nextUrl.searchParams.get('lang'));
+  const cambia = lang && request.cookies.get(COOKIE_IDIOMA)?.value !== lang;
+  const response = portero(request);
+  if (cambia) recordarIdioma(response, lang);
+  return response;
+}
+
+/* ?lang=xx cambia el idioma de todo el sitio. Se escribe en el pedido (para
+   que esta misma página ya salga traducida) y en la respuesta (para los
+   pedidos que siguen). Vale también para /acceso: se elige antes de entrar. */
+function recordarIdioma(response, lang) {
+  response.cookies.set(COOKIE_IDIOMA, lang, {
+    path: '/', sameSite: 'lax', maxAge: 60 * 60 * 24 * 365,
+  });
+}
+
+function seguir(request) {
+  const lang = idiomaValido(request.nextUrl.searchParams.get('lang'));
+  if (!lang) return NextResponse.next();
+  request.cookies.set(COOKIE_IDIOMA, lang);
+  return NextResponse.next({ request: { headers: request.headers } });
+}
+
+function portero(request) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith('/acceso') || pathname.startsWith('/_next')
@@ -25,13 +52,13 @@ export function middleware(request) {
       /* El logo se ve en la propia pantalla de acceso. Es una ruta exacta, no
          un prefijo: no abre nada más de /public. */
       || pathname === '/logo-wizor.png') {
-    return NextResponse.next();
+    return seguir(request);
   }
 
   const expected = process.env.SITE_PASSWORD;
 
   if (!expected) {
-    if (process.env.NODE_ENV !== 'production') return NextResponse.next();
+    if (process.env.NODE_ENV !== 'production') return seguir(request);
     return new NextResponse(
       'Este despliegue no tiene SITE_PASSWORD configurada, así que no se abre a nadie. '
       + 'Definila en las variables de entorno del proyecto.',
@@ -39,7 +66,7 @@ export function middleware(request) {
     );
   }
 
-  if (request.cookies.get(COOKIE)?.value === expected) return NextResponse.next();
+  if (request.cookies.get(COOKIE)?.value === expected) return seguir(request);
 
   const url = request.nextUrl.clone();
   url.pathname = '/acceso';

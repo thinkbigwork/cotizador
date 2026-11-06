@@ -12,6 +12,8 @@ Es la herramienta con la que el equipo arma el precio de Wizor para una organiza
 - **`/ventas/comision`** · la comisión de quien vende. Se abre en otra pestaña y nunca aparece en el cotizador ni en esta guía.
 - **`/admin/catalogo`** · el back office donde Wizor cambia precios.
 
+**Idioma.** Todas las pantallas están en español, inglés y portugués. El selector **ES · EN · PT** está arriba en cada una, y lo que elijas vale para todo el sitio. En el modo presentación también se ve, por si el cliente necesita la pantalla en su idioma.
+
 ## Cómo funciona
 
 1. Se carga la organización: **actividad**, **cantidad de personas**, **establecimientos** y **países**.
@@ -128,6 +130,7 @@ Se actualiza solo con cada publicación desde el back office.
 
 | Fecha | Cambio |
 |---|---|
+| 6 nov 2026 | Todo el sitio en español, inglés y portugués: cotizador, comisión, acceso y back office. El idioma elegido vale para todas las pantallas (#6). |
 | 6 nov 2026 | Guía del cotizador en la página de inicio, en español, inglés y portugués, con esta sección de versiones. |
 | 6 nov 2026 | Tipografía, logo y colores de sales.wizor.io (#4). |
 | 6 nov 2026 | La comisión se ve con la clave compartida durante la etapa de prueba (#3). |

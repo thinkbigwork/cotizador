@@ -48,8 +48,8 @@ const IDENTIFICADORES = [
    porque buscarlas da coincidencias por azar, no fugas. */
 const TASAS_DISTINTIVAS = ['0.025', '0.038', '0.38', '0.52'];
 
-const PALABRAS = ['comision', 'comisión', 'commission', 'conector',
-                  'desarrollador', 'socio de negocio'];
+const PALABRAS = ['comision', 'comisión', 'commission', 'comissão', 'conector',
+                  'desarrollador', 'socio de negocio', 'business partner', 'sócio de negócio'];
 
 async function descargarTodo(ruta) {
   const res = await pedir(BASE + ruta);
@@ -68,33 +68,43 @@ async function descargarTodo(ruta) {
   return { html, todo: html + '\n' + scripts.join('\n'), scripts: srcs.length };
 }
 
-test('el cotizador en modo presentación no nombra comisiones', async () => {
-  const { html } = await descargarTodo('/ventas?modo=cliente');
-  const bajo = html.toLowerCase();
-  for (const palabra of PALABRAS) {
-    assert.ok(!bajo.includes(palabra.toLowerCase()),
-      `El HTML que ve el cliente contiene "${palabra}".`);
+test('el cotizador en modo presentación no nombra comisiones, en ningún idioma', async () => {
+  for (const lang of ['es', 'en', 'pt']) {
+    const { html } = await descargarTodo(`/ventas?modo=cliente&lang=${lang}`);
+    const bajo = html.toLowerCase();
+    for (const palabra of PALABRAS) {
+      assert.ok(!bajo.includes(palabra.toLowerCase()),
+        `El HTML que ve el cliente (${lang}) contiene "${palabra}".`);
+    }
   }
 });
 
-test('el módulo de comisiones no se empaqueta en el cotizador', async () => {
-  const { todo, scripts } = await descargarTodo('/ventas');
-  assert.ok(scripts > 0, 'La página debería cargar al menos un script.');
+test('el módulo de comisiones no se empaqueta en el cotizador, en ningún idioma', async () => {
+  for (const ruta of ['/ventas?lang=es', '/ventas?lang=en', '/ventas?lang=pt']) {
+    const { todo, scripts } = await descargarTodo(ruta);
+    assert.ok(scripts > 0, 'La página debería cargar al menos un script.');
 
-  const filtrados = IDENTIFICADORES.filter((id) => todo.includes(id));
-  assert.deepEqual(filtrados, [],
-    `El navegador recibió código de comisiones: ${filtrados.join(', ')}`);
+    const filtrados = IDENTIFICADORES.filter((id) => todo.includes(id));
+    assert.deepEqual(filtrados, [],
+      `${ruta}: el navegador recibió código de comisiones: ${filtrados.join(', ')}`);
 
-  const tasas = TASAS_DISTINTIVAS.filter((tasa) => {
-    const re = new RegExp(`(^|[^\\d.])${tasa.replace('.', '\\.')}([^\\d]|$)`);
-    return re.test(todo);
-  });
-  assert.deepEqual(tasas, [], `Tasas de comisión encontradas: ${tasas.join(', ')}`);
+    const tasas = TASAS_DISTINTIVAS.filter((tasa) => {
+      const re = new RegExp(`(^|[^\\d.])${tasa.replace('.', '\\.')}([^\\d]|$)`);
+      return re.test(todo);
+    });
+    assert.deepEqual(tasas, [], `${ruta}: tasas de comisión encontradas: ${tasas.join(', ')}`);
 
-  /* Tampoco la escala como secuencia, en ninguna notación. */
-  for (const forma of ['100000,0.25', '1e5,.25', '[100000,0.25]', '2000000,0.52']) {
-    assert.ok(!todo.replace(/\s/g, '').includes(forma),
-      `Se encontró la escala de comisiones: ${forma}`);
+    /* Tampoco la escala como secuencia, en ninguna notación. */
+    for (const forma of ['100000,0.25', '1e5,.25', '[100000,0.25]', '2000000,0.52']) {
+      assert.ok(!todo.replace(/\s/g, '').includes(forma),
+        `${ruta}: se encontró la escala de comisiones: ${forma}`);
+    }
+
+    /* Ni los textos que explican la comisión: viven solo en su página. */
+    for (const frase of ['TEXTOS_COMISION', 'Escala marginal', 'Marginal scale',
+                         'already paid at a lower rate', 'cobrado a una tasa menor', 'pago a uma taxa menor']) {
+      assert.ok(!todo.includes(frase), `${ruta} recibió un texto de comisiones: "${frase}"`);
+    }
   }
 });
 
@@ -116,13 +126,17 @@ test('la guía (/) tampoco empaqueta comisiones', async () => {
 test('la vista de comisión sí la tiene, para probar que el test sirve', async () => {
   /* Control negativo: si este test pasara también en /ventas, el anterior
      no estaría comprobando nada. */
-  const { html } = await descargarTodo('/ventas/comision');
+  const { html } = await descargarTodo('/ventas/comision?lang=es');
   assert.match(html.toLowerCase(), /comisión/);
   assert.match(html, /socio de negocio/i);
+  const en = await descargarTodo('/ventas/comision?lang=en');
+  assert.match(en.html, /business partner/i);
+  const pt = await descargarTodo('/ventas/comision?lang=pt');
+  assert.match(pt.html, /sócio de negócio/i);
 });
 
 test('tampoco viaja el modelo de precios', async () => {
-  const { todo } = await descargarTodo('/ventas');
+  const { todo } = await descargarTodo('/ventas?lang=es');
   /* Las curvas y el mínimo anual se calculan en el servidor. */
   for (const constante of ['0.833', '0.583', '0.433', '17640', '24000', '4800']) {
     assert.ok(!todo.includes(constante),
@@ -131,7 +145,7 @@ test('tampoco viaja el modelo de precios', async () => {
 });
 
 test('el modo presentación saca todo el cromo interno', async () => {
-  const { html } = await descargarTodo('/ventas?modo=cliente');
+  const { html } = await descargarTodo('/ventas?modo=cliente&lang=es');
   const bajo = html.toLowerCase();
   assert.ok(!bajo.includes('mi comisión'), 'En modo presentación no puede quedar el link a comisiones.');
   assert.ok(!bajo.includes('cotizador</span>'), 'Tampoco el rótulo interno.');
@@ -140,9 +154,12 @@ test('el modo presentación saca todo el cromo interno', async () => {
     'Pero el cotizador sí tiene que verse.');
 });
 
-test('la vista de comisión avisa que es interna', async () => {
-  const { html } = await descargarTodo('/ventas/comision');
-  assert.match(html, /no mostrar al cliente/i);
+test('la vista de comisión avisa que es interna, en los tres idiomas', async () => {
+  const avisos = { es: /no mostrar al cliente/i, en: /do not show the client/i, pt: /não mostrar ao cliente/i };
+  for (const [lang, aviso] of Object.entries(avisos)) {
+    const { html } = await descargarTodo(`/ventas/comision?lang=${lang}`);
+    assert.match(html, aviso, `Falta el aviso en ${lang}`);
+  }
 });
 
 test('el precio se calcula en el servidor y vuelve ya resuelto', async () => {

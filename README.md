@@ -93,7 +93,7 @@ app/
 lib/
   pricebook/         esquema, semilla, diferencias, repositorio
   pricing/           motor, comisiones, catálogo público
-  db.js  auth.js  i18n.js
+  db.js  auth.js  i18n.js  idioma.js
 db/migrations/       SQL, se aplican en orden
 tests/               44 pruebas + 7 de separación de comisiones
 ```

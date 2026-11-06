@@ -41,7 +41,12 @@ una sección de versiones: las del catálogo se listan solas y las del
 cotizador se agregan con cada PR. Es interna y muestra el modelo comercial
 completo, por decisión de Wizor.
 
-59 tests en verde (51 sin servidor más 8 de separación).
+**Todo el sitio en tres idiomas**: guía, cotizador, comisión, acceso y back
+office. El idioma elegido queda en una cookie y vale para todas las pantallas.
+Los mensajes de validación del catálogo y de autenticación (`lib/`) siguen en
+español.
+
+63 tests en verde (55 sin servidor más 8 de separación).
 
 ---
 

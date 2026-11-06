@@ -20,17 +20,6 @@ import { STRINGS, NOTE_KEYS, SEGMENT_KEYS, PER_PERSON_UNIT } from '../../lib/i18
 const money = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
 const money2 = (n) => `$${n.toFixed(2)}`;
 
-const CHECKOUT_NOTE = {
-  es: {
-    pay: 'Se puede contratar en línea.',
-    deposit: 'Preventa: se reserva con una seña de {monto}, que se descuenta de la facturación.',
-    request: 'Sin cargo. Se activa por solicitud.',
-    contact: 'Requiere una propuesta a medida.',
-    incomplete: 'Wizor 360 necesita equipamiento instalado para funcionar. Agregá al menos un equipo.',
-    none: 'Elegí al menos un servicio.',
-  },
-};
-
 export default function Quoter({ catalog, lang = 'es', presentation }) {
   const t = STRINGS[lang];
   const unit = PER_PERSON_UNIT[lang];
@@ -110,9 +99,8 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
   }
 
   const checkout = result?.checkout;
-  const notes = CHECKOUT_NOTE[lang] || CHECKOUT_NOTE.es;
   const checkoutNote = checkout
-    ? (notes[checkout.mode] || '').replace('{monto}', money(checkout.depositUsd ?? 0))
+    ? (t.ck[checkout.mode] || '').replace('{monto}', money(checkout.depositUsd ?? 0))
     : '';
 
   return (
@@ -179,14 +167,14 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
 
         {[...byGroup.entries()].map(([group, items]) => (
           <section className="panel" key={group}>
-            <h2>{group === 'panel' ? 'Panel de Control' : t.t3}</h2>
+            <h2>{group === 'panel' ? t.panelT : t.t3}</h2>
             {items.map((h) => (
               <div className="dev" key={h.key}>
                 <div className="n">
                   <b>{h.name}</b>
                   <small>
                     {h.spec?.[lang]} · {money(h.price)}
-                    {h.preOrder && <> · <span className="pre-mark">preventa</span></>}
+                    {h.preOrder && <> · <span className="pre-mark">{t.pre.toLowerCase()}</span></>}
                   </small>
                 </div>
                 <input type="number" min="0" step="1" value={hardware[h.key] ?? 0}

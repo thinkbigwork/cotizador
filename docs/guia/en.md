@@ -12,6 +12,8 @@ The tool the team uses to price Wizor for an organization, on the spot and witho
 - **`/ventas/comision`** · the seller's commission. Opens in another tab and never appears in the quoter or in this guide.
 - **`/admin/catalogo`** · the back office where Wizor changes prices.
 
+**Language.** Every screen is available in Spanish, English and Portuguese. The **ES · EN · PT** selector sits at the top of each one, and your choice applies to the whole site. It also shows in presentation mode, in case the client needs the screen in their language.
+
 ## How it works
 
 1. Enter the organization: **activity**, **headcount**, **sites** and **countries**.
@@ -128,6 +130,7 @@ Updates on its own with every publication from the back office.
 
 | Date | Change |
 |---|---|
+| Nov 6, 2026 | The whole site in Spanish, English and Portuguese: quoter, commission, access and back office. The chosen language applies to every screen (#6). |
 | Nov 6, 2026 | Quoter guide on the home page, in Spanish, English and Portuguese, with this versions section. |
 | Nov 6, 2026 | Typography, logo and colors from sales.wizor.io (#4). |
 | Nov 6, 2026 | The commission is visible with the shared password during the trial stage (#3). |

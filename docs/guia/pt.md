@@ -12,6 +12,8 @@ Uso interno da equipe Wizor.
 - **`/ventas/comision`** · a comissão de quem vende. Abre em outra aba e nunca aparece no cotador nem neste guia.
 - **`/admin/catalogo`** · o back office onde a Wizor altera preços.
 
+**Idioma.** Todas as telas estão em espanhol, inglês e português. O seletor **ES · EN · PT** fica no topo de cada uma, e a escolha vale para todo o site. No modo apresentação ele também aparece, caso o cliente precise da tela no seu idioma.
+
 ## Como funciona
 
 1. Informe a organização: **atividade**, **quantidade de pessoas**, **estabelecimentos** e **países**.
@@ -128,6 +130,7 @@ Atualiza-se sozinha a cada publicação no back office.
 
 | Data | Mudança |
 |---|---|
+| 6 nov 2026 | Todo o site em espanhol, inglês e português: cotador, comissão, acesso e back office. O idioma escolhido vale para todas as telas (#6). |
 | 6 nov 2026 | Guia do cotador na página inicial, em espanhol, inglês e português, com esta seção de versões. |
 | 6 nov 2026 | Tipografia, logo e cores de sales.wizor.io (#4). |
 | 6 nov 2026 | A comissão fica visível com a senha compartilhada durante a etapa de testes (#3). |

@@ -13,30 +13,32 @@ import Link from 'next/link';
 import Marca from './Marca.jsx';
 import { getPublished, listVersions } from '../lib/pricebook/repo.js';
 import { armarGuia } from '../lib/guia/render.js';
-import { IDIOMAS, TEXTOS } from '../lib/guia/textos.js';
+import { TEXTOS } from '../lib/guia/textos.js';
+import { idiomaActual } from '../lib/idioma.js';
+import SelectorIdioma from './SelectorIdioma.jsx';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Wizor · Guía del cotizador', robots: { index: false, follow: false } };
+
+const TITULO = { es: 'Wizor · Guía del cotizador', en: 'Wizor · Quoter guide', pt: 'Wizor · Guia do cotador' };
+const ROTULO = { es: 'Guía', en: 'Guide', pt: 'Guia' };
+
+export async function generateMetadata() {
+  return { title: TITULO[await idiomaActual()], robots: { index: false, follow: false } };
+}
 
 export default async function GuiaPage({ searchParams }) {
   const params = await searchParams;
-  const lang = IDIOMAS.includes(params?.lang) ? params.lang : 'es';
+  /* ?lang ya lo convirtió el portero en la cookie del idioma. */
+  const lang = await idiomaActual();
   const T = TEXTOS[lang];
 
   const [book, versiones] = await Promise.all([getPublished(), listVersions()]);
 
   const barra = (
     <header className="g-bar">
-      <Marca rotulo={lang === 'en' ? 'Guide' : lang === 'pt' ? 'Guia' : 'Guía'} />
+      <Marca rotulo={ROTULO[lang]} />
       <nav>
-        <span className="g-idiomas">
-          {IDIOMAS.map((l) => (
-            <Link key={l} href={l === 'es' ? '/' : `/?lang=${l}`} aria-current={l === lang ? 'true' : undefined}
-                  title={TEXTOS[l].idioma}>
-              {l.toUpperCase()}
-            </Link>
-          ))}
-        </span>
+        <SelectorIdioma lang={lang} ruta="/" params={params} />
         <Link className="btn primary" href="/ventas">{T.irVentas} →</Link>
       </nav>
     </header>
