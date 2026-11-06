@@ -1,4 +1,5 @@
 import { currentUser } from '../../../lib/auth.js';
+import Marca from '../../Marca.jsx';
 import * as repo from '../../../lib/pricebook/repo.js';
 import { describeChange } from '../../../lib/pricebook/diff.js';
 import { abrirBorrador, publicar, descartar } from './actions.js';
@@ -40,7 +41,7 @@ export default async function CatalogoPage() {
       )}
 
       <header className="topbar">
-        <div className="brand">Wizor <span>Back office</span></div>
+        <Marca rotulo="Back office" />
         <div className="who">{user.name} · {user.email} · {user.role}</div>
       </header>
 

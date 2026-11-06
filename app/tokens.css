@@ -32,7 +32,7 @@
   --warn-line:rgba(249,115,22,.25);
 
   /* Tipografía y medidas */
-  --font:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font:var(--font-montserrat),'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
   --maxw:1140px;
   --gutter:20px;
   --r-sm:10px;
