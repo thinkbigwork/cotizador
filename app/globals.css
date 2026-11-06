@@ -316,3 +316,81 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
   border:1px solid var(--line);border-radius:var(--r-md);padding:12px 13px;
 }
 .acceso .err{color:var(--warn);font-size:12.5px;margin:10px 0 0}
+
+/* ==========================================================================
+   Guía del cotizador (/). Lectura larga: columna de texto angosta, índice
+   fijo a la izquierda y tablas con scroll propio en pantallas chicas.
+   ========================================================================== */
+.g-bar{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:14px 24px;border-bottom:1px solid var(--line);background:var(--deep);
+}
+.g-bar .brand{display:flex;align-items:center;gap:10px}
+.g-bar .brand span{
+  font-size:9.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--accent);background:var(--a20);border-radius:var(--pill);padding:3px 9px;
+}
+.g-bar nav{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.g-bar .btn{text-decoration:none}
+.g-idiomas{display:flex;border:1px solid var(--line-str);border-radius:var(--pill);overflow:hidden}
+.g-idiomas a{font-size:11.5px;font-weight:700;letter-spacing:.5px;padding:6px 11px;color:var(--fg3);text-decoration:none}
+.g-idiomas a[aria-current]{background:var(--a20);color:var(--accent)}
+
+.g-wrap{
+  max-width:var(--maxw);margin:0 auto;padding:32px var(--gutter) 64px;
+  display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;align-items:start;
+}
+.g-indice{position:sticky;top:84px}
+.g-indice summary{
+  font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--fg3);
+  cursor:pointer;list-style:none;margin-bottom:10px;
+}
+.g-indice summary::-webkit-details-marker{display:none}
+.g-indice ol{margin:0;padding:0;list-style:none;border-left:1px solid var(--line)}
+.g-indice a{display:block;padding:6px 0 6px 14px;margin-left:-1px;border-left:2px solid transparent;
+  color:var(--fg2);text-decoration:none;font-size:13.5px;font-weight:500}
+.g-indice a:hover{color:var(--fg);border-left-color:var(--accent)}
+
+.g-cuerpo{max-width:780px;font-size:15px;line-height:1.7;color:var(--fg2)}
+.g-cuerpo h1{font-size:34px;font-weight:900;letter-spacing:-1px;color:var(--fg);margin:0 0 12px}
+.g-cuerpo h2{
+  font-size:24px;font-weight:900;letter-spacing:-.5px;color:var(--fg);
+  margin:56px 0 14px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:84px;
+}
+.g-cuerpo h3{font-size:17px;font-weight:800;color:var(--fg);margin:32px 0 8px;scroll-margin-top:84px}
+.g-cuerpo strong{color:var(--fg)}
+.g-cuerpo a{color:var(--accent)}
+.g-cuerpo code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;
+  background:var(--card2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--accent);
+}
+.g-cuerpo ul,.g-cuerpo ol{padding-left:22px}
+.g-cuerpo li{margin:4px 0}
+.g-cuerpo li::marker{color:var(--accent)}
+.g-tabla{overflow-x:auto;margin:16px 0 20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card)}
+.g-tabla table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.5}
+.g-tabla th{
+  text-align:left;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--fg3);background:var(--card2);white-space:nowrap;
+}
+.g-tabla th,.g-tabla td{padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.g-tabla tr:last-child td{border-bottom:0}
+.g-tabla td:first-child{color:var(--fg);font-weight:600}
+.g-pie{margin-top:48px}
+.g-pie .btn{text-decoration:none}
+
+@media(max-width:860px){
+  /* minmax(0,1fr) y no 1fr: con 1fr la columna crece al ancho de la tabla
+     más ancha y la página entera se desborda en el celular. */
+  .g-wrap{grid-template-columns:minmax(0,1fr);gap:20px;padding-top:20px}
+  .g-indice{position:static;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 16px}
+  .g-indice summary{margin:0}
+  .g-indice details[open] summary{margin-bottom:10px}
+  .g-cuerpo h1{font-size:27px}
+  .g-cuerpo h2{font-size:21px;margin-top:40px}
+}
+@media(max-width:560px){
+  .g-bar{padding:12px 16px}
+  .g-bar nav{width:100%;justify-content:space-between}
+}

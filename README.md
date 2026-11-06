@@ -4,6 +4,7 @@ Aplicación Next.js sobre Postgres. Tres superficies previstas:
 
 | Ruta | Qué es | Estado |
 |---|---|---|
+| `/` | Guía del cotizador, uso interno (es · en · pt) | funcionando |
 | `/ventas` | Cotizador de vendedores | funcionando |
 | `/ventas/comision` | Comisión del vendedor, vista interna | funcionando |
 | `/admin/catalogo` | Back office del catálogo de precios | funcionando |
