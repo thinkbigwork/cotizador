@@ -130,6 +130,7 @@ Updates on its own with every publication from the back office.
 
 | Date | Change |
 |---|---|
+| Nov 6, 2026 | The logo takes you to the guide from any screen (#7). |
 | Nov 6, 2026 | The whole site in Spanish, English and Portuguese: quoter, commission, access and back office. The chosen language applies to every screen (#6). |
 | Nov 6, 2026 | Quoter guide on the home page, in Spanish, English and Portuguese, with this versions section. |
 | Nov 6, 2026 | Typography, logo and colors from sales.wizor.io (#4). |

@@ -159,6 +159,9 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
 }
 /* El logo mide 840×278; a 28px de alto queda como en sales.wizor.io. */
 .brand-logo{display:block;height:28px;width:auto}
+.brand-home{display:block;border-radius:6px;transition:opacity .15s}
+.brand-home:hover{opacity:.8}
+.brand-home:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .acceso .brand{display:flex;align-items:center;gap:10px}
 .acceso .brand-logo{height:34px}
 .q-bar nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
