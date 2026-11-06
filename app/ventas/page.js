@@ -14,6 +14,7 @@ import { currentUser } from '../../lib/auth.js';
 import { getPublished } from '../../lib/pricebook/repo.js';
 import { publicCatalog } from '../../lib/pricing/public-catalog.js';
 import Quoter from './Quoter.jsx';
+import Marca from '../Marca.jsx';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,7 +36,7 @@ export default async function VentasPage({ searchParams }) {
     <>
       {!presentation && (
         <header className="q-bar">
-          <div className="brand">Wizor <span>Cotizador</span></div>
+          <Marca rotulo="Cotizador" />
           <nav>
             {user && <span className="who">{user.name}</span>}
             <Link className="btn ghost" href="/ventas?modo=cliente">Modo presentación</Link>

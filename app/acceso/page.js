@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import Marca from '../Marca.jsx';
 
 export const metadata = { title: 'Wizor · Acceso', robots: { index: false } };
 export const dynamic = 'force-dynamic';
@@ -27,7 +28,7 @@ export default async function AccesoPage({ searchParams }) {
   return (
     <main className="acceso">
       <form action={entrar}>
-        <div className="brand">Wizor <span>Cotizador</span></div>
+        <Marca rotulo="Cotizador" />
         <p className="muted">Herramienta interna de vendedores y partners.</p>
         <input type="password" name="clave" placeholder="Clave de acceso"
                autoComplete="current-password" autoFocus required />

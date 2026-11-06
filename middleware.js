@@ -21,7 +21,10 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith('/acceso') || pathname.startsWith('/_next')
-      || pathname === '/favicon.ico') {
+      || pathname === '/favicon.ico'
+      /* El logo se ve en la propia pantalla de acceso. Es una ruta exacta, no
+         un prefijo: no abre nada más de /public. */
+      || pathname === '/logo-wizor.png') {
     return NextResponse.next();
   }
 

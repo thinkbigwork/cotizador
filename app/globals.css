@@ -32,7 +32,7 @@
   --warn-line:rgba(249,115,22,.25);
 
   /* Tipografía y medidas */
-  --font:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font:var(--font-montserrat),'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
   --maxw:1140px;
   --gutter:20px;
   --r-sm:10px;
@@ -157,6 +157,10 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
   font-size:9.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
   color:var(--accent);background:var(--a20);border-radius:var(--pill);padding:3px 9px;
 }
+/* El logo mide 840×278; a 28px de alto queda como en sales.wizor.io. */
+.brand-logo{display:block;height:28px;width:auto}
+.acceso .brand{display:flex;align-items:center;gap:10px}
+.acceso .brand-logo{height:34px}
 .q-bar nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .q-bar .who{font-size:12px;color:var(--fg3);margin-right:4px}
 .btn.ghost{
@@ -219,8 +223,8 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
 .pre-mark{color:var(--warn);font-weight:700}
 .plan .price{margin-left:auto;font-weight:800;color:var(--accent);white-space:nowrap}
 .plan .prenote{
-  margin:9px 0 0;font-size:12px;line-height:1.5;color:var(--warn);
-  background:var(--warn-bg);border:1px solid var(--warn-line);
+  margin:9px 0 0;font-size:12px;line-height:1.5;color:var(--fg3);
+  background:var(--card2);border:1px solid var(--line);
   border-radius:var(--r-sm);padding:8px 11px;
 }
 
