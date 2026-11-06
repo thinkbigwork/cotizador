@@ -6,7 +6,10 @@
    (ver middleware.js) para que el logo se vea en la propia pantalla de acceso.
 
    Es blanco sobre transparente: solo sirve sobre los fondos oscuros de la
-   marca. No usarlo en la hoja impresa (fondo claro). */
+   marca. No usarlo en la hoja impresa (fondo claro).
+
+   El logo lleva a la guía (/), que es la página de inicio. Es un <a> común:
+   no hace falta precargar la guía desde cada pantalla. */
 
 export const LOGO = '/logo-wizor.png';
 
@@ -14,7 +17,9 @@ export default function Marca({ rotulo }) {
   return (
     <div className="brand">
       {/* 840×278: el alto lo fija el CSS y el ancho sale de la proporción. */}
-      <img src={LOGO} alt="Wizor" width={840} height={278} className="brand-logo" />
+      <a href="/" className="brand-home">
+        <img src={LOGO} alt="Wizor" width={840} height={278} className="brand-logo" />
+      </a>
       {rotulo && <span>{rotulo}</span>}
     </div>
   );

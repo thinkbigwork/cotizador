@@ -130,6 +130,7 @@ Se actualiza solo con cada publicación desde el back office.
 
 | Fecha | Cambio |
 |---|---|
+| 6 nov 2026 | El logo lleva a la guía desde cualquier pantalla (#7). |
 | 6 nov 2026 | Todo el sitio en español, inglés y portugués: cotizador, comisión, acceso y back office. El idioma elegido vale para todas las pantallas (#6). |
 | 6 nov 2026 | Guía del cotizador en la página de inicio, en español, inglés y portugués, con esta sección de versiones. |
 | 6 nov 2026 | Tipografía, logo y colores de sales.wizor.io (#4). |
