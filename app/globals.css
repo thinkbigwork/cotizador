@@ -1,0 +1,314 @@
+/* ==========================================================================
+   tokens.css — única fuente de verdad del sistema visual.
+   Valores medidos sobre sales.wizor.io. Ningún otro archivo define colores,
+   tipografías ni radios literales: todo se referencia desde acá.
+   ========================================================================== */
+:root{
+  /* Superficies */
+  --bg:#001C38;
+  --deep:#00254A;
+  --card:rgba(255,255,255,.03);
+  --card2:rgba(255,255,255,.05);
+
+  /* Bordes */
+  --line:rgba(255,255,255,.1);
+  --line-soft:rgba(255,255,255,.05);
+  --line-str:rgba(255,255,255,.2);
+
+  /* Acento de marca */
+  --accent:#87CA9C;
+  --a10:rgba(135,202,156,.1);
+  --a20:rgba(135,202,156,.2);
+  --a40:rgba(135,202,156,.4);
+
+  /* Texto */
+  --fg:#FFFFFF;
+  --fg2:rgba(255,255,255,.75);
+  --fg3:#9CA3AF;
+
+  /* Estados de advertencia (preventa, uso interno) */
+  --warn:#FB923C;
+  --warn-bg:rgba(249,115,22,.1);
+  --warn-line:rgba(249,115,22,.25);
+
+  /* Tipografía y medidas */
+  --font:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --maxw:1140px;
+  --gutter:20px;
+  --r-sm:10px;
+  --r-md:12px;
+  --r-lg:16px;
+  --r-xl:24px;
+  --pill:9999px;
+
+  /* Tinta de la hoja impresa (fondo claro, no hereda el tema oscuro) */
+  --ink:#0b2239;
+  --ink2:#55687c;
+  --ink3:#7a8a99;
+  --ink-line:#e4eaef;
+  --ink-accent:#0E8A5F;
+  --ink-tint:#eef4f2;
+
+  color-scheme:dark;
+}
+
+/* ==========================================================================
+   Back office. Hereda los tokens de marca de Wizor y agrega lo propio de una
+   herramienta de trabajo: densidad alta, jerarquía clara y el impacto de cada
+   cambio señalado por color.
+   ========================================================================== */
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--font);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent)}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 24px;border-bottom:1px solid var(--line);background:var(--deep);
+  flex-wrap:wrap;
+}
+.topbar .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.2px}
+.topbar .brand span{
+  font-size:9.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--accent);background:var(--a20);border-radius:var(--pill);padding:3px 9px;
+}
+.topbar .who{font-size:12px;color:var(--fg3)}
+
+.devwarn{
+  background:var(--warn-bg);color:var(--warn);border-bottom:1px solid var(--warn-line);
+  padding:7px 24px;font-size:11.5px;font-weight:700;letter-spacing:.4px;text-align:center;
+}
+
+main.admin{max-width:1060px;margin:0 auto;padding:28px 24px 80px}
+h1{font-size:24px;font-weight:800;letter-spacing:-.4px;margin:0 0 6px}
+.lede{color:var(--fg3);margin:0 0 26px;max-width:70ch}
+h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
+
+.panel{
+  background:var(--card);border:1px solid var(--line-soft);
+  border-radius:var(--r-lg);padding:20px;margin-bottom:18px;
+}
+.panel.accent{border-color:var(--a40);background:var(--a10)}
+.panel.warn{border-color:var(--warn-line);background:var(--warn-bg)}
+
+.rowline{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:10px 0;border-bottom:1px solid var(--line-soft);flex-wrap:wrap;
+}
+.rowline:last-child{border-bottom:0}
+.muted{color:var(--fg3);font-size:12.5px}
+
+.pill{
+  font-size:9.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+  padding:3px 9px;border-radius:var(--pill);background:var(--card2);color:var(--fg2);
+}
+.pill.pub{background:var(--a20);color:var(--accent)}
+.pill.draft{background:var(--warn-bg);color:var(--warn)}
+.pill.arch{background:var(--card2);color:var(--fg3)}
+
+.btn{
+  font:inherit;font-size:13px;font-weight:700;padding:9px 16px;border-radius:var(--r-sm);
+  border:1px solid var(--line-str);background:transparent;color:var(--fg);cursor:pointer;
+}
+.btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.btn.danger{color:var(--warn);border-color:var(--warn-line)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+.changes{margin:0;padding:0;list-style:none;font-size:13px}
+.changes li{
+  display:flex;gap:10px;align-items:baseline;padding:8px 0;
+  border-bottom:1px solid var(--line-soft);
+}
+.changes li:last-child{border-bottom:0}
+.tagi{
+  flex:none;font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  padding:2px 7px;border-radius:var(--pill);min-width:74px;text-align:center;
+}
+.tagi.price{background:var(--warn-bg);color:var(--warn)}
+.tagi.structure{background:var(--a20);color:var(--accent)}
+.tagi.text{background:var(--card2);color:var(--fg3)}
+.changes code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--fg2)}
+
+.counts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.count{
+  font-size:12px;font-weight:700;padding:5px 11px;border-radius:var(--pill);
+  background:var(--card2);color:var(--fg2);
+}
+.count.price{background:var(--warn-bg);color:var(--warn)}
+
+.err{color:var(--warn);font-size:13px;margin:10px 0 0}
+.err ul{margin:6px 0 0;padding-left:18px}
+
+/* ==========================================================================
+   Cotizador de vendedores. Hereda la estética de la web de Wizor.
+   ========================================================================== */
+
+.q-bar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:14px 24px;border-bottom:1px solid var(--line);background:var(--deep);
+}
+.q-bar .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.2px}
+.q-bar .brand span{
+  font-size:9.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--accent);background:var(--a20);border-radius:var(--pill);padding:3px 9px;
+}
+.q-bar nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.q-bar .who{font-size:12px;color:var(--fg3);margin-right:4px}
+.btn.ghost{
+  font-size:12px;font-weight:700;padding:7px 13px;border-radius:var(--pill);
+  border:1px solid var(--line-str);color:var(--fg2);text-decoration:none;background:transparent;
+}
+.btn.ghost:hover{color:var(--fg);border-color:var(--accent)}
+.btn.wide{width:100%;margin-top:16px}
+
+.q-exit{padding:8px 24px;font-size:11.5px}
+.q-exit a{color:var(--fg3);text-decoration:none}
+.q-exit a:hover{color:var(--accent)}
+
+.q-wrap{
+  max-width:var(--maxw);margin:0 auto;padding:26px var(--gutter) 80px;
+  display:grid;grid-template-columns:minmax(0,1fr) 382px;gap:24px;align-items:start;
+}
+.q-wrap aside{position:sticky;top:18px}
+@media(max-width:940px){
+  .q-wrap{grid-template-columns:minmax(0,1fr)}
+  .q-wrap aside{position:static}
+}
+.q-empty{max-width:var(--maxw);margin:0 auto;padding:60px var(--gutter);color:var(--fg3)}
+
+.q-wrap .panel h2{font-size:17px;margin-bottom:4px}
+.q-wrap .hint{color:var(--fg3);font-size:13px;margin:0 0 16px}
+.q-wrap label{display:block;margin-bottom:0}
+.q-wrap label > span{
+  display:block;font-size:10.5px;font-weight:700;color:var(--fg2);
+  margin:0 0 6px;letter-spacing:.6px;text-transform:uppercase;
+}
+.q-wrap select,.q-wrap input[type=number]{
+  width:100%;font:inherit;font-size:15px;font-weight:500;color:var(--fg);
+  background:var(--card2);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:11px 12px;appearance:none;
+}
+.q-wrap .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.q-wrap .grid2{grid-template-columns:1fr}}
+
+.plans{display:grid;gap:12px}
+.plan{
+  border:1px solid var(--line);border-radius:var(--r-lg);padding:15px 17px;cursor:pointer;
+  background:var(--card);width:100%;text-align:left;font:inherit;color:inherit;display:block;
+  transition:border-color .14s,background .14s;
+}
+.plan:hover{border-color:var(--line-str)}
+.plan[data-on="1"]{border-color:var(--a40);background:var(--a10)}
+.plan h3{margin:0;font-size:16px;font-weight:800;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Etiquetas de estado del producto. El ámbar de preventa es el mismo que
+   usa la web de Wizor para marcar lo que todavía no se entrega. */
+.tag{
+  font-size:9.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+  padding:4px 10px;border-radius:var(--pill);background:var(--card2);color:var(--fg2);
+}
+.tag.ok{background:var(--a20);color:var(--accent)}
+.tag.pre{background:var(--warn-bg);color:var(--warn)}
+
+/* La misma marca, en línea, junto al precio de un equipo. */
+.pre-mark{color:var(--warn);font-weight:700}
+.plan .price{margin-left:auto;font-weight:800;color:var(--accent);white-space:nowrap}
+.plan .prenote{
+  margin:9px 0 0;font-size:12px;line-height:1.5;color:var(--warn);
+  background:var(--warn-bg);border:1px solid var(--warn-line);
+  border-radius:var(--r-sm);padding:8px 11px;
+}
+
+.q-wrap .dev{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.q-wrap .dev:last-child{border-bottom:0}
+.q-wrap .dev .n{flex:1;min-width:0;font-size:14px;font-weight:600}
+.q-wrap .dev .n small{display:block;color:var(--fg3);font-size:12px;font-weight:400;margin-top:2px}
+.q-wrap .dev input{width:88px;text-align:center;flex:none}
+
+.sum{background:var(--deep);border:1px solid var(--a40);border-radius:var(--r-xl);padding:24px}
+.sum h2{font-size:10.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+.sum .big{font-size:clamp(2rem,6vw,2.5rem);font-weight:900;letter-spacing:-1.3px;line-height:1.02}
+.sum .big small{font-size:13px;font-weight:600;color:var(--fg3);letter-spacing:0;margin-left:3px}
+.sum .taxline{margin:10px 0 0;font-size:11.5px;color:var(--fg3);line-height:1.5}
+.sum .warnline{margin:10px 0 0;font-size:12.5px;font-weight:700;color:var(--warn)}
+.sum .rows{margin:18px 0 0;font-size:13.5px}
+.sum .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line-soft);color:var(--fg2)}
+.sum .row:last-child{border-bottom:0}
+.sum .row b{color:var(--fg);text-align:right}
+.sum .row.tot{margin-top:8px;padding-top:13px;border-top:1px solid var(--a40);border-bottom:0;font-size:15px;color:var(--fg);font-weight:700}
+.sum .row.tot b{color:var(--accent);font-weight:800}
+.sum .muted{color:var(--fg3);font-size:12px;margin-top:14px;line-height:1.55}
+.sum .internal-note{margin:12px 0 0;font-size:10.5px;color:var(--fg3);letter-spacing:.2px}
+
+.segbox{
+  margin-top:16px;background:var(--card2);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:12px 14px;font-size:12.5px;line-height:1.5;color:var(--fg2);
+}
+.segbox b{display:block;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.segbox.deposit{border-color:var(--warn-line);background:var(--warn-bg)}
+.segbox.deposit b{color:var(--warn)}
+.segbox.incomplete{border-color:var(--warn-line)}
+.segbox.incomplete b{color:var(--warn)}
+
+/* --- Comisión · vista interna, deliberadamente distinta --- */
+.c-wrap{max-width:720px;margin:0 auto;padding:0 var(--gutter) 70px}
+.c-warn{
+  margin:0 calc(var(--gutter) * -1) 26px;background:var(--warn-bg);color:var(--warn);
+  border-bottom:1px solid var(--warn-line);padding:9px 24px;text-align:center;
+  font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+}
+.c-head h1{font-size:23px;margin:0 0 4px}
+.c-head .muted{margin:0 0 22px;color:var(--fg3);font-size:13px}
+.c-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}
+.c-form label{display:block}
+.c-form label > span{display:block;font-size:10.5px;font-weight:700;color:var(--fg2);margin:0 0 6px;letter-spacing:.6px;text-transform:uppercase}
+.c-form label small{display:block;margin-top:5px;font-size:11px;color:var(--fg3)}
+.c-form input,.c-form select{
+  width:100%;font:inherit;font-size:15px;color:var(--fg);background:var(--card2);
+  border:1px solid var(--line);border-radius:var(--r-md);padding:11px 12px;appearance:none;
+}
+@media(max-width:560px){.c-form{grid-template-columns:1fr}}
+
+.c-result h2{font-size:12px;letter-spacing:.7px;text-transform:uppercase;color:var(--accent);margin:22px 0 8px}
+.c-amount{font-size:40px;font-weight:900;letter-spacing:-1.6px;line-height:1.05;color:var(--accent)}
+.c-amount small{display:block;font-size:13px;font-weight:600;color:var(--fg3);letter-spacing:0;margin-top:6px}
+.c-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.c-table th{text-align:left;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--fg3);padding:7px 0;border-bottom:1px solid var(--line)}
+.c-table td{padding:8px 0;border-bottom:1px solid var(--line-soft);color:var(--fg2);font-variant-numeric:tabular-nums}
+.c-table td:last-child,.c-table th:last-child{text-align:right;color:var(--fg);font-weight:700}
+.c-next{
+  margin-top:16px;background:var(--a10);border:1px solid var(--a40);
+  border-radius:var(--r-lg);padding:13px 15px;font-size:13.5px;line-height:1.55;
+}
+.c-next b{color:var(--accent)}
+.c-lock{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r-lg);padding:20px;margin-top:40px}
+.c-back{margin-top:24px;font-size:13px}
+.c-back a{color:var(--fg3);text-decoration:none}
+.small{font-size:11.5px}
+
+@media print{
+  .q-bar,.q-exit,.btn,.internal-note{display:none!important}
+}
+
+/* --- Portero provisorio --- */
+.acceso{min-height:100vh;display:grid;place-items:center;padding:24px}
+.acceso form{
+  width:100%;max-width:340px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-xl);padding:28px;
+}
+.acceso .brand{font-weight:800;font-size:19px;letter-spacing:-.3px;margin-bottom:4px}
+.acceso .brand span{
+  font-size:9.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--accent);background:var(--a20);border-radius:var(--pill);padding:3px 9px;margin-left:6px;
+}
+.acceso .muted{color:var(--fg3);font-size:12.5px;margin:0 0 20px}
+.acceso input[type=password]{
+  width:100%;font:inherit;font-size:15px;color:var(--fg);background:var(--card2);
+  border:1px solid var(--line);border-radius:var(--r-md);padding:12px 13px;
+}
+.acceso .err{color:var(--warn);font-size:12.5px;margin:10px 0 0}

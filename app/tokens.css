@@ -1,0 +1,53 @@
+/* ==========================================================================
+   tokens.css — única fuente de verdad del sistema visual.
+   Valores medidos sobre sales.wizor.io. Ningún otro archivo define colores,
+   tipografías ni radios literales: todo se referencia desde acá.
+   ========================================================================== */
+:root{
+  /* Superficies */
+  --bg:#001C38;
+  --deep:#00254A;
+  --card:rgba(255,255,255,.03);
+  --card2:rgba(255,255,255,.05);
+
+  /* Bordes */
+  --line:rgba(255,255,255,.1);
+  --line-soft:rgba(255,255,255,.05);
+  --line-str:rgba(255,255,255,.2);
+
+  /* Acento de marca */
+  --accent:#87CA9C;
+  --a10:rgba(135,202,156,.1);
+  --a20:rgba(135,202,156,.2);
+  --a40:rgba(135,202,156,.4);
+
+  /* Texto */
+  --fg:#FFFFFF;
+  --fg2:rgba(255,255,255,.75);
+  --fg3:#9CA3AF;
+
+  /* Estados de advertencia (preventa, uso interno) */
+  --warn:#FB923C;
+  --warn-bg:rgba(249,115,22,.1);
+  --warn-line:rgba(249,115,22,.25);
+
+  /* Tipografía y medidas */
+  --font:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --maxw:1140px;
+  --gutter:20px;
+  --r-sm:10px;
+  --r-md:12px;
+  --r-lg:16px;
+  --r-xl:24px;
+  --pill:9999px;
+
+  /* Tinta de la hoja impresa (fondo claro, no hereda el tema oscuro) */
+  --ink:#0b2239;
+  --ink2:#55687c;
+  --ink3:#7a8a99;
+  --ink-line:#e4eaef;
+  --ink-accent:#0E8A5F;
+  --ink-tint:#eef4f2;
+
+  color-scheme:dark;
+}
