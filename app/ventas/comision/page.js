@@ -6,11 +6,13 @@
    nunca tiene las dos cosas en la misma vista mientras le muestra la pantalla
    a un cliente.
 
-   Pide usuario identificado. Sin sesión no muestra ni un número.
+   Pide usuario identificado o, mientras el cotizador está en prueba con el
+   equipo interno, la clave compartida del sitio. Sin ninguna de las dos no
+   muestra ni un número.
    ========================================================================== */
 
 import Link from 'next/link';
-import { currentUser } from '../../../lib/auth.js';
+import { currentUser, accesoConClave } from '../../../lib/auth.js';
 import { getPublished } from '../../../lib/pricebook/repo.js';
 import { commissionFor } from '../../../lib/pricing/commissions.js';
 
@@ -33,15 +35,19 @@ const num = (v, fallback) => {
 export default async function ComisionPage({ searchParams }) {
   const params = await searchParams;
 
-  let user;
+  let user = null;
   try {
     user = await currentUser();
   } catch (error) {
-    return (
-      <main className="c-wrap">
-        <div className="c-lock"><p>{error.message}</p></div>
-      </main>
-    );
+    /* Sin usuario identificado (en producción todavía no hay login), basta la
+       clave compartida. Si tampoco está, se corta acá, antes de calcular. */
+    if (!(await accesoConClave())) {
+      return (
+        <main className="c-wrap">
+          <div className="c-lock"><p>{error.message}</p></div>
+        </main>
+      );
+    }
   }
 
   const book = await getPublished();
@@ -61,7 +67,7 @@ export default async function ComisionPage({ searchParams }) {
       <header className="c-head">
         <h1>Tu comisión</h1>
         <p className="muted">
-          {user.name} · catálogo v{book.version}
+          {user ? user.name : 'Acceso con clave compartida'} · catálogo v{book.version}
         </p>
       </header>
 

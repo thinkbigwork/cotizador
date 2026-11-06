@@ -81,6 +81,9 @@ npm test                               # 44 pruebas
 node --test tests/separacion.test.mjs  # 7, necesita el servidor levantado
 ```
 
+Con el portero activo, el test necesita `SITE_PASSWORD` en el entorno; sin
+ella falla en lugar de aprobar la página de `/acceso`.
+
 El test más importante compara el motor actual contra una copia literal del
 anterior sobre **39.744 combinaciones**. Ningún cambio puede mover un precio
 sin que falle. Si falla después de un cambio al modelo comercial, es

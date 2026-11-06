@@ -30,7 +30,10 @@ auditoría de quién cambió qué.
 **Cotizador de vendedores** (`/ventas`) con modo presentación, y la comisión
 en ruta aparte (`/ventas/comision`).
 
-**Portero provisorio** por clave compartida, que falla cerrado.
+**Portero provisorio** por clave compartida, que falla cerrado. Mientras el
+cotizador está en prueba con el equipo interno, la clave alcanza para
+`/ventas` y `/ventas/comision` (la comisión no muestra nombre). El back office
+sigue exigiendo un usuario identificado y no abre en producción.
 
 51 tests en verde.
 

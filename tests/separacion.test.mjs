@@ -12,10 +12,22 @@ import assert from 'node:assert/strict';
 
 const BASE = process.env.TEST_BASE_URL || 'http://127.0.0.1:3100';
 
+/* Si el servidor tiene el portero activo, hay que pasar la clave: sin ella
+   cada pedido termina en /acceso, y como esa página no menciona comisiones,
+   los tests de "no aparece" pasarían sin haber mirado /ventas. Por lo mismo
+   no se siguen redirecciones: una redirección es un 307, no un 200, y el
+   test falla en vez de aprobar la página equivocada. */
+const COOKIE = process.env.SITE_PASSWORD ? `wizor_acceso=${process.env.SITE_PASSWORD}` : null;
+const pedir = (url, init = {}) => fetch(url, {
+  redirect: 'manual',
+  ...init,
+  headers: { ...(init.headers ?? {}), ...(COOKIE ? { cookie: COOKIE } : {}) },
+});
+
 /* Estas pruebas necesitan la aplicación corriendo: descargan páginas reales y
    sus scripts. Si el servidor no está, se saltean con un aviso en lugar de
    fallar — un test que no se puede ejecutar no es un test roto. */
-const servidorArriba = await fetch(BASE + '/ventas', { method: 'HEAD' })
+const servidorArriba = await pedir(BASE + '/ventas', { method: 'HEAD' })
   .then(() => true)
   .catch(() => false);
 
@@ -40,7 +52,7 @@ const PALABRAS = ['comision', 'comisión', 'commission', 'conector',
                   'desarrollador', 'socio de negocio'];
 
 async function descargarTodo(ruta) {
-  const res = await fetch(BASE + ruta);
+  const res = await pedir(BASE + ruta);
   assert.equal(res.status, 200, `${ruta} respondió ${res.status}`);
   const html = await res.text();
 
@@ -48,7 +60,7 @@ async function descargarTodo(ruta) {
   const srcs = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]);
   const scripts = await Promise.all(
     srcs.map(async (src) => {
-      const r = await fetch(src.startsWith('http') ? src : BASE + src);
+      const r = await pedir(src.startsWith('http') ? src : BASE + src);
       return r.ok ? r.text() : '';
     }),
   );
@@ -119,7 +131,7 @@ test('la vista de comisión avisa que es interna', async () => {
 });
 
 test('el precio se calcula en el servidor y vuelve ya resuelto', async () => {
-  const res = await fetch(BASE + '/api/quote', {
+  const res = await pedir(BASE + '/api/quote', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
