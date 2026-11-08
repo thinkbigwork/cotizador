@@ -9,3 +9,8 @@ update contenido_catalogo
    set imagen = '/img/catalogo/desk.jpg'
  where clave = 'desk'
    and imagen = '/img/catalogo/desk.svg';
+
+update contenido_catalogo
+   set imagen = '/img/catalogo/mach.jpg'
+ where clave = 'mach'
+   and imagen = '/img/catalogo/mach.svg';
