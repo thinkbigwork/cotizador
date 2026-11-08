@@ -107,7 +107,7 @@ base.
 ## Tests
 
 ```bash
-npm test                               # 55 pruebas (8 se saltean sin servidor)
+npm test                               # 67 pruebas (14 se saltean sin servidor)
 node --test tests/separacion.test.mjs  # 8, necesita el servidor levantado
 ```
 
