@@ -140,6 +140,7 @@ Atualiza-se sozinha a cada publicação no back office.
 
 | Data | Mudança |
 |---|---|
+| 8 nov 2026 | O Wizor Lens é descrito como o que é: somente avaliação de risco psicossocial. Antes mencionava também ergonomia e risco biológico (#9). |
 | 8 nov 2026 | Os serviços mostram a mesma miniatura dos equipamentos: um clique na imagem abre a ficha (#8). |
 | 8 nov 2026 | Cada serviço e cada equipamento tem sua ficha: imagem, descrição e características, em um painel que abre ao lado sem cobrir o total. O conteúdo é editado à parte da tabela de preços. |
 | 6 nov 2026 | O logo leva ao guia a partir de qualquer tela (#7). |
