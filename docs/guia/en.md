@@ -87,7 +87,7 @@ Bought once, with no monthly fee, and they **only work with a product that suppo
 - **Control panels:** the monitoring center. Fatigue, stress and air quality in real time: more than 200 variables, under 1 second of latency, in the cloud or on the client's premises, with predictive analysis.
 
 
-**Cards.** Every service and device has a *View details* button that opens a card
+**Cards.** Every service and device has a thumbnail and a *View details* button that open a card
 alongside, with an image, a description and its features. The panel comes in from
 the left on purpose: the total stays in view while the product is explained.
 Escape or a click outside closes it.
@@ -140,7 +140,8 @@ Updates on its own with every publication from the back office.
 
 | Date | Change |
 |---|---|
-| 8 Nov 2026 | Every service and device has its own card: image, description and features, in a panel that opens to the side without covering the total. The content is edited separately from the price book. |
+| Nov 8, 2026 | Services show the same thumbnail as devices: clicking the image opens their card (#8). |
+| Nov 8, 2026 | Every service and device has its own card: image, description and features, in a panel that opens to the side without covering the total. The content is edited separately from the price book. |
 | Nov 6, 2026 | The logo takes you to the guide from any screen (#7). |
 | Nov 6, 2026 | The whole site in Spanish, English and Portuguese: quoter, commission, access and back office. The chosen language applies to every screen (#6). |
 | Nov 6, 2026 | Quoter guide on the home page, in Spanish, English and Portuguese, with this versions section. |

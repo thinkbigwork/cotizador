@@ -443,6 +443,13 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
 .dev-mini img{display:block;width:100%;height:100%;object-fit:cover}
 .dev-mini:hover{border-color:var(--a40)}
 
+/* En los servicios, la miniatura va a la izquierda y ocupa el alto de la
+   tarjeta; elegir el plan y "Ver detalle" quedan en la columna de al lado. */
+.plan.con-mini{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:start}
+.plan.con-mini .plan-mini{grid-row:1 / span 2}
+.plan.con-mini .plan-elegir,.plan.con-mini .plan-ficha{grid-column:2}
+.plan.con-mini .plan-ficha{justify-self:start}
+
 /* --- Panel de detalle --- */
 /* Entra por la IZQUIERDA, no por la derecha. Cubre la columna de
    configuración —que es de donde salió el clic— y deja intacto el panel de
