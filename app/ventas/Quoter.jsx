@@ -168,7 +168,15 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
                 /* La tarjeta NO es un botón: adentro hay dos acciones
                    distintas —elegir el plan y abrir la ficha— y un botón
                    dentro de otro es HTML inválido y un clic ambiguo. */
-                <div key={p.key} className="plan" data-on={on ? 1 : 0}>
+                <div key={p.key} className={p.ficha?.imagen ? 'plan con-mini' : 'plan'} data-on={on ? 1 : 0}>
+                  {/* La misma miniatura que los equipos: sin ella, el "Ver
+                      detalle" de los servicios pasaba desapercibido. */}
+                  {p.ficha?.imagen && (
+                    <button type="button" className="dev-mini plan-mini" onClick={() => setFichaDe(p.key)}
+                      aria-label={`${t.ficha.ver}: ${p.name}`}>
+                      <img src={p.ficha.imagen} alt="" width="1200" height="900" />
+                    </button>
+                  )}
                   <button type="button" className="plan-elegir" aria-pressed={on}
                     onClick={() => toggleProduct(p.key)}>
                     <h3>

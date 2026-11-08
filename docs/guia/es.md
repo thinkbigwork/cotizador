@@ -87,7 +87,7 @@ Se compran una vez, sin abono mensual, y **solo funcionan con un producto que lo
 - **Paneles de control:** el centro de monitoreo. Fatiga, estrés y calidad del aire en tiempo real: más de 200 variables, latencia menor a 1 segundo, en la nube o en las instalaciones del cliente, con análisis predictivo.
 
 
-**Fichas.** Cada servicio y cada equipo tiene un botón *Ver detalle* que abre una
+**Fichas.** Cada servicio y cada equipo tiene una miniatura y un botón *Ver detalle* que abren una
 ficha al costado, con imagen, descripción y características. El panel entra por la
 izquierda a propósito: el total queda a la vista mientras se explica el producto.
 Con la tecla Escape o un clic afuera se cierra.
@@ -140,6 +140,7 @@ Se actualiza solo con cada publicación desde el back office.
 
 | Fecha | Cambio |
 |---|---|
+| 8 nov 2026 | Los servicios muestran la misma miniatura que los equipos: un clic en la imagen abre su ficha (#8). |
 | 8 nov 2026 | Cada servicio y cada equipo tiene su ficha: imagen, descripción y características, en un panel que se abre al costado sin tapar el total. El contenido se edita aparte del catálogo de precios. |
 | 6 nov 2026 | El logo lleva a la guía desde cualquier pantalla (#7). |
 | 6 nov 2026 | Todo el sitio en español, inglés y portugués: cotizador, comisión, acceso y back office. El idioma elegido vale para todas las pantallas (#6). |
