@@ -115,6 +115,7 @@ Un producto en preventa se muestra con su precio, pero no se cobra el abono: se 
 1. **Cotizar con el cliente.** Abrí `/ventas` y activá el **modo presentación** si vas a mostrar la pantalla. La comisión está en otra pestaña; nunca la tengas abierta al lado.
 2. **Seguir el canal sugerido.** Autoservicio: el cliente contrata solo. Con acompañamiento: demo de 30 minutos con su dotación y establecimientos reales. Propuesta: oferta consolidada por país.
 3. **Cerrar según el desenlace** que muestra el cotizador (pago, seña, solicitud o propuesta).
+4. **Dejar la cotización por escrito.** *Descargar PDF* pide el nombre de la empresa y arma un documento de tres páginas: portada y servicios, dispositivos y paneles, y resumen de la inversión. Lo elegido se destaca y lo demás aparece atenuado.
 
 **Contrato:** {{contrato.meses}} meses, facturación {{contrato.facturacion}}. Una cotización vale {{contrato.validez}} días.
 
@@ -140,6 +141,7 @@ Se actualiza solo con cada publicación desde el back office.
 
 | Fecha | Cambio |
 |---|---|
+| 8 nov 2026 | La cotización en PDF es un documento propio de tres páginas, con el nombre de la empresa en la portada, lo elegido destacado y textos legibles en papel (#16). |
 | 8 nov 2026 | Wizor Lens se describe como lo que es: solo evaluación de riesgo psicosocial. Antes mencionaba también ergonomía y riesgo biológico (#9). |
 | 8 nov 2026 | Los servicios muestran la misma miniatura que los equipos: un clic en la imagen abre su ficha (#8). |
 | 8 nov 2026 | Cada servicio y cada equipo tiene su ficha: imagen, descripción y características, en un panel que se abre al costado sin tapar el total. El contenido se edita aparte del catálogo de precios. |

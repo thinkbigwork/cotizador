@@ -535,3 +535,129 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
 }
 
 @media print{.ficha-fondo{display:none!important}}
+
+/* ==========================================================================
+   Cotización en PDF — diálogo previo y hoja de impresión (app/ventas/Hoja.jsx)
+   ========================================================================== */
+
+/* Lo elegido tiene que notarse también en pantalla, no solo en el PDF. */
+.plan[data-on="1"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+
+.hoja-dlg{
+  width:min(420px,calc(100% - 32px));padding:0;border:1px solid var(--line-str);
+  border-radius:var(--r-xl);background:var(--deep);color:var(--fg);
+}
+.hoja-dlg::backdrop{background:rgba(0,10,22,.7);backdrop-filter:blur(2px)}
+.hoja-dlg form{padding:24px}
+.hoja-dlg h2{margin:0 0 16px;font-size:17px}
+.hoja-dlg label span{display:block;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--fg2);margin-bottom:6px}
+.hoja-dlg input{
+  width:100%;font:inherit;font-size:15px;color:var(--fg);background:var(--card2);
+  border:1px solid var(--line-str);border-radius:var(--r-md);padding:11px 12px;
+}
+.hoja-dlg input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.hoja-dlg .hint{font-size:12px;color:var(--fg2);margin:8px 0 18px}
+.hoja-dlg-acc{display:flex;justify-content:flex-end;gap:10px}
+
+/* La hoja no existe en pantalla. */
+.hoja{display:none}
+
+@media print{
+  /* Papel blanco: el fondo azul de la app no se imprime, y los textos claros
+     pensados para él quedaban gris claro sobre blanco. */
+  @page{size:A4;margin:12mm 14mm}
+  html,body{background:#fff!important;color:#0B1F33}
+  .q-wrap,.q-bar,.q-exit,.ficha-fondo,.hoja-dlg,.devwarn{display:none!important}
+
+  .hoja{
+    display:block;color:#0B1F33;font-size:10.5pt;line-height:1.45;
+    --h-sub:#3F4B5B;--h-linea:#D5DCE4;--h-verde:#2E7D4F;--h-verde-claro:#87CA9C;
+    --h-ambar:#B45309;--h-azul:#001C38;
+  }
+  /* Cada página arranca en hoja nueva y ningún cuadro se parte. Si se
+     "simplifica" el salto, el resumen vuelve a quedar cortado en dos. */
+  .hoja-pag{break-after:page;position:relative;min-height:265mm;padding-bottom:12mm}
+  .hoja-pag:last-child{break-after:auto}
+  .hoja-serv,.hoja-grupo,.hoja-total,.hoja-filas,.hoja-cierre,.hoja-org{break-inside:avoid}
+
+  .hoja h2{font-size:13pt;font-weight:800;margin:16pt 0 8pt;color:#0B1F33}
+  .hoja h3{font-size:11.5pt;font-weight:800;margin:0;color:#0B1F33}
+  .hoja p{margin:0}
+
+  .hoja-tapa{
+    display:flex;align-items:center;justify-content:space-between;gap:16pt;
+    background:var(--h-azul);color:#fff;border-radius:8pt;padding:16pt 20pt;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .hoja-tapa img{height:30pt;width:auto}
+  .hoja-tapa div{text-align:right}
+  .hoja-tapa h1{margin:0;font-size:20pt;font-weight:800;color:#fff}
+  .hoja-para{font-size:11pt;color:#fff;margin-top:3pt!important}
+  .hoja-para b{color:var(--h-verde-claro)}
+  .hoja-fecha{font-size:9pt;color:#C9D3DE;margin-top:3pt!important}
+  .hoja-intro{margin-top:12pt!important;color:var(--h-sub)}
+
+  .hoja-org{display:grid;grid-template-columns:repeat(4,1fr);gap:8pt}
+  .hoja-dato{border:1px solid var(--h-linea);border-radius:6pt;padding:7pt 9pt}
+  .hoja-dato span{display:block;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;color:var(--h-sub)}
+  .hoja-dato b{font-size:11pt}
+
+  .hoja-servicios{display:grid;gap:9pt}
+  .hoja-serv{
+    display:grid;grid-template-columns:96pt 1fr;gap:12pt;align-items:start;
+    border:1px solid var(--h-linea);border-radius:8pt;padding:10pt;
+  }
+  .hoja-serv img{width:96pt;height:72pt;object-fit:cover;border-radius:5pt}
+  .hoja-serv p{color:var(--h-sub);font-size:9.5pt}
+  .hoja-serv ul{margin:5pt 0 0;padding-left:13pt;font-size:9pt;color:#0B1F33}
+  .hoja-serv-cab{display:flex;align-items:center;justify-content:space-between;gap:8pt}
+  /* Lo que no se eligió se ve, pero atenuado: el cliente sabe que existe sin
+     confundirlo con lo cotizado. */
+  .hoja-serv:not(.on){opacity:.42}
+  .hoja-serv:not(.on) img{filter:grayscale(1)}
+  .hoja-serv.on{
+    border:2pt solid var(--h-verde);background:#F1F8F3;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  .hoja-marca{font-size:7.5pt;font-weight:800;letter-spacing:.5pt;text-transform:uppercase;color:var(--h-sub);border:1px solid var(--h-linea);border-radius:20pt;padding:2pt 8pt}
+  .hoja-marca.on{color:#fff;background:var(--h-verde);border-color:var(--h-verde);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hoja .hoja-precio{font-weight:800;color:var(--h-verde);font-size:11pt;margin:2pt 0 4pt}
+  .hoja-pre{color:var(--h-ambar);font-weight:700;font-size:8.5pt}
+
+  .hoja-titulo-pag{margin-top:0!important;padding-bottom:6pt;border-bottom:2pt solid var(--h-verde)}
+  .hoja-vacio{color:var(--h-sub)}
+  .hoja-grupo{margin-top:12pt}
+  .hoja-grupo h3{margin-bottom:6pt}
+  .hoja-tabla{width:100%;border-collapse:collapse;font-size:9.5pt}
+  .hoja-tabla th{font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;color:var(--h-sub);text-align:right;padding:4pt 6pt;border-bottom:1px solid var(--h-linea)}
+  .hoja-tabla td{padding:6pt;border-bottom:1px solid var(--h-linea);text-align:right;vertical-align:middle}
+  .hoja-tabla td:nth-child(2){text-align:left}
+  .hoja-tabla td b{display:block}
+  .hoja-tabla td small{color:var(--h-sub);font-size:8.5pt}
+  .hoja-mini{width:58pt}
+  .hoja-mini img{width:52pt;height:39pt;object-fit:cover;border-radius:4pt;display:block}
+  .hoja-tabla tr:not(.on){opacity:.42}
+  .hoja-tabla tr:not(.on) img{filter:grayscale(1)}
+  .hoja-tabla tr.on td{background:#F1F8F3;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hoja-tabla tr.on td:first-child{box-shadow:inset 3pt 0 0 var(--h-verde)}
+
+  .hoja-total{display:flex;justify-content:space-between;align-items:baseline;background:var(--h-azul);color:#fff;border-radius:8pt;padding:14pt 18pt;margin-top:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hoja-total span{font-size:9pt;font-weight:800;letter-spacing:.8pt;text-transform:uppercase;color:var(--h-verde-claro)}
+  .hoja-total b{font-size:24pt;font-weight:900}
+  .hoja-total small{font-size:10pt;font-weight:600;color:#C9D3DE}
+  .hoja-filas{width:100%;border-collapse:collapse;margin-top:10pt;font-size:10.5pt}
+  .hoja-filas td{padding:6pt 4pt;border-bottom:1px solid var(--h-linea);color:#0B1F33}
+  .hoja-filas td:last-child{text-align:right;font-weight:700}
+  .hoja-filas tr.tot td{border-bottom:0;border-top:2pt solid #0B1F33;font-size:12.5pt;font-weight:800;padding-top:9pt}
+  .hoja-filas tr.tot td:last-child{color:var(--h-verde)}
+  .hoja-notas{margin-top:12pt!important;color:var(--h-sub);font-size:9.5pt}
+  .hoja-cierre{margin-top:12pt;border:1.5pt solid var(--h-ambar);border-radius:7pt;padding:9pt 12pt}
+  .hoja-cierre b{display:block;font-size:8pt;letter-spacing:.6pt;text-transform:uppercase;color:var(--h-ambar)}
+  .hoja-cierre span{color:#0B1F33}
+  .hoja-legal{margin-top:14pt!important;font-size:8.5pt;color:var(--h-sub)}
+
+  .hoja-pie{
+    position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;
+    font-size:7.5pt;color:var(--h-sub);border-top:1px solid var(--h-linea);padding-top:5pt;
+  }
+}

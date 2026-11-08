@@ -115,6 +115,7 @@ Um produto em pré-venda aparece com seu preço, mas a assinatura não é cobrad
 1. **Cotar com o cliente.** Abra `/ventas` e ative o **modo apresentação** se for mostrar a tela. A comissão fica em outra aba; nunca a deixe aberta ao lado.
 2. **Seguir o canal sugerido.** Autoatendimento: o cliente contrata sozinho. Com acompanhamento: demo de 30 minutos com o quadro e os estabelecimentos reais. Proposta: oferta consolidada por país.
 3. **Fechar conforme o desfecho** que o cotador mostra (pagamento, sinal, solicitação ou proposta).
+4. **Deixar o orçamento por escrito.** *Baixar PDF* pede o nome da empresa e monta um documento de três páginas: capa e serviços, dispositivos e painéis, e resumo do investimento. O que foi escolhido se destaca e o resto aparece atenuado.
 
 **Contrato:** {{contrato.meses}} meses, faturamento {{contrato.facturacion}}. Uma cotação vale {{contrato.validez}} dias.
 
@@ -140,6 +141,7 @@ Atualiza-se sozinha a cada publicação no back office.
 
 | Data | Mudança |
 |---|---|
+| 8 nov 2026 | O orçamento em PDF é um documento próprio de três páginas, com o nome da empresa na capa, o que foi escolhido em destaque e textos legíveis no papel (#16). |
 | 8 nov 2026 | O Wizor Lens é descrito como o que é: somente avaliação de risco psicossocial. Antes mencionava também ergonomia e risco biológico (#9). |
 | 8 nov 2026 | Os serviços mostram a mesma miniatura dos equipamentos: um clique na imagem abre a ficha (#8). |
 | 8 nov 2026 | Cada serviço e cada equipamento tem sua ficha: imagem, descrição e características, em um painel que abre ao lado sem cobrir o total. O conteúdo é editado à parte da tabela de preços. |
