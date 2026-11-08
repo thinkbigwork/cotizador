@@ -16,6 +16,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Ficha from './Ficha.jsx';
+import Hoja from './Hoja.jsx';
 import { STRINGS, NOTE_KEYS, SEGMENT_KEYS, PER_PERSON_UNIT } from '../../lib/i18n.js';
 
 const money = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
@@ -35,6 +36,31 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
 
   /* Clave del ítem cuya ficha está abierta, o null. */
   const [fichaDe, setFichaDe] = useState(null);
+
+  /* Empresa a la que va dirigida la cotización. Se pide antes de imprimir y
+     sale en la portada del PDF. */
+  const [empresa, setEmpresa] = useState('');
+  const dialogo = useRef(null);
+  const [imprimir, setImprimir] = useState(false);
+
+  /* Se imprime en el render siguiente al de confirmar, para que la hoja ya
+     tenga el nombre. El título de la pestaña pasa a ser el del archivo: es el
+     nombre que el navegador propone al guardar el PDF. */
+  useEffect(() => {
+    if (!imprimir) return;
+    setImprimir(false);
+    const antes = document.title;
+    document.title = [t.hoja.archivo, empresa.trim()].filter(Boolean).join(' · ');
+    const volver = () => { document.title = antes; window.removeEventListener('afterprint', volver); };
+    window.addEventListener('afterprint', volver);
+    window.print();
+  }, [imprimir, empresa, t.hoja.archivo]);
+
+  function confirmarPdf(e) {
+    e.preventDefault();
+    dialogo.current?.close();
+    setImprimir(true);
+  }
 
   const byGroup = useMemo(() => {
     const groups = new Map();
@@ -271,7 +297,7 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
             </div>
           )}
 
-          <button className="btn primary wide" type="button" onClick={() => window.print()}>
+          <button className="btn primary wide" type="button" onClick={() => dialogo.current?.showModal()}>
             {t.ctaPdf}
           </button>
 
@@ -288,6 +314,25 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
         de la grilla. Adentro, al ser también un <aside>, la regla
         `.q-wrap aside{position:static}` del móvil le ganaba en especificidad
         y la hoja quedaba sin posicionar, con el total dibujado encima. */}
+    <dialog ref={dialogo} className="hoja-dlg" aria-labelledby="hoja-dlg-t">
+      <form onSubmit={confirmarPdf}>
+        <h2 id="hoja-dlg-t">{t.hoja.dlgT}</h2>
+        <label>
+          <span>{t.hoja.dlgL}</span>
+          <input type="text" value={empresa} maxLength={80} autoFocus
+            placeholder={t.hoja.dlgP} onChange={(e) => setEmpresa(e.target.value)} />
+        </label>
+        <p className="hint">{t.hoja.dlgH}</p>
+        <div className="hoja-dlg-acc">
+          <button type="button" className="btn ghost" onClick={() => dialogo.current?.close()}>{t.hoja.dlgNo}</button>
+          <button type="submit" className="btn primary">{t.hoja.dlgOk}</button>
+        </div>
+      </form>
+    </dialog>
+
+    <Hoja t={t} lang={lang} unit={unit} catalog={catalog} form={form} selected={selected}
+      result={result} empresa={empresa.trim()} gruposEquipos={[...byGroup.entries()]} />
+
     <Ficha
       item={itemDeFicha}
       lang={lang}

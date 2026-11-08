@@ -115,6 +115,7 @@ A pre-order product is shown with its price, but the subscription is not charged
 1. **Quote with the client.** Open `/ventas` and turn on **presentation mode** if you are going to show the screen. The commission lives in another tab; never keep it open next to it.
 2. **Follow the suggested channel.** Self-service: the client signs up alone. Guided: 30-minute demo with their real headcount and sites. Proposal: consolidated offer per country.
 3. **Close according to the outcome** the quoter shows (payment, deposit, request or proposal).
+4. **Leave the quote in writing.** *Download PDF* asks for the company name and builds a three-page document: cover and services, devices and panels, and investment summary. What was chosen stands out and the rest is dimmed.
 
 **Contract:** {{contrato.meses}} months, {{contrato.facturacion}} billing. A quote is valid for {{contrato.validez}} days.
 
@@ -140,6 +141,7 @@ Updates on its own with every publication from the back office.
 
 | Date | Change |
 |---|---|
+| Nov 8, 2026 | The PDF quote is its own three-page document, with the company name on the cover, the chosen items highlighted and text that reads well on paper (#16). |
 | Nov 8, 2026 | Wizor Lens is described as what it is: psychosocial risk assessment only. It used to also mention ergonomics and biological risk (#9). |
 | Nov 8, 2026 | Services show the same thumbnail as devices: clicking the image opens their card (#8). |
 | Nov 8, 2026 | Every service and device has its own card: image, description and features, in a panel that opens to the side without covering the total. The content is edited separately from the price book. |
