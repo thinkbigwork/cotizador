@@ -140,6 +140,7 @@ Updates on its own with every publication from the back office.
 
 | Date | Change |
 |---|---|
+| Nov 8, 2026 | Wizor Lens is described as what it is: psychosocial risk assessment only. It used to also mention ergonomics and biological risk (#9). |
 | Nov 8, 2026 | Services show the same thumbnail as devices: clicking the image opens their card (#8). |
 | Nov 8, 2026 | Every service and device has its own card: image, description and features, in a panel that opens to the side without covering the total. The content is edited separately from the price book. |
 | Nov 6, 2026 | The logo takes you to the guide from any screen (#7). |
