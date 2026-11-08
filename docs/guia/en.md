@@ -86,6 +86,16 @@ Bought once, with no monthly fee, and they **only work with a product that suppo
 - **Smart Desktop:** fixed device for enclosed spaces; one or several units can be used per environment. Plug and play, completely silent. Measures air, VOC, noise, temperature, light and vibrations, 24/7.
 - **Control panels:** the monitoring center. Fatigue, stress and air quality in real time: more than 200 variables, under 1 second of latency, in the cloud or on the client's premises, with predictive analysis.
 
+
+**Cards.** Every service and device has a *View details* button that opens a card
+alongside, with an image, a description and its features. The panel comes in from
+the left on purpose: the total stays in view while the product is explained.
+Escape or a click outside closes it.
+
+Card content does not live in the price book but in its own table, because fixing
+a description should not force publishing a new version of the price book. A card
+that has not been reviewed is shown marked as draft.
+
 ## Pre-order and deposit
 
 **On pre-order today:** {{preventa.productos}}, and the devices {{preventa.equipos}}.
@@ -130,6 +140,7 @@ Updates on its own with every publication from the back office.
 
 | Date | Change |
 |---|---|
+| 8 Nov 2026 | Every service and device has its own card: image, description and features, in a panel that opens to the side without covering the total. The content is edited separately from the price book. |
 | Nov 6, 2026 | The logo takes you to the guide from any screen (#7). |
 | Nov 6, 2026 | The whole site in Spanish, English and Portuguese: quoter, commission, access and back office. The chosen language applies to every screen (#6). |
 | Nov 6, 2026 | Quoter guide on the home page, in Spanish, English and Portuguese, with this versions section. |

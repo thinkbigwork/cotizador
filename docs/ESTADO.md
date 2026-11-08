@@ -30,6 +30,12 @@ auditoría de quién cambió qué.
 **Cotizador de vendedores** (`/ventas`) con modo presentación, y la comisión
 en ruta aparte (`/ventas/comision`).
 
+**Fichas de catálogo.** Cada servicio y cada equipo tiene ficha con imagen,
+descripción y características, en un panel que se abre al costado sin tapar el
+total. El contenido vive en su propia tabla (`contenido_catalogo`), aparte del
+catálogo de precios: corregir una descripción no obliga a publicar una versión
+nueva.
+
 **Portero provisorio** por clave compartida, que falla cerrado. Mientras el
 cotizador está en prueba con el equipo interno, la clave alcanza para
 `/ventas` y `/ventas/comision` (la comisión no muestra nombre). El back office
@@ -90,6 +96,8 @@ Ninguna bloquea el trabajo, pero todas necesitan que Wizor las confirme.
 | Paneles de Control | Se pueden comprar varios del mismo tipo y no son excluyentes entre sí. Decisión por defecto. |
 | Plazo de alta tras el pago | La pantalla de confirmación tiene que prometer un plazo concreto, porque el alta es manual hasta que exista la API. Falta definir cuál. |
 | Programa fundador: cupos y cierre | El catálogo dice **10 cupos por país** y sin fecha de cierre (`seatsPerCountry`, `activeUntil: null`). El cotizador (`fP` y `fS` en `i18n.js`) dice "Diez organizaciones" y "cierra en 2026". La guía sigue al catálogo. Falta confirmar cuál vale. |
+| Textos de las fichas | **Borrador.** Los resúmenes salen del `spec` del catálogo, ya aprobado. Las características de Smart Desktop y de los paneles salen de sales.wizor.io. Smart Machine y Smart Pin **no tienen características**: la web no publica ninguna y no se inventaron. Falta que Wizor las escriba y apruebe. |
+| Imágenes de las fichas | **Provisorias.** Son dibujos de referencia, uniformes, en `public/img/catalogo/`. Las fotos definitivas las produce Wizor; reemplazarlas es soltar archivos con el mismo nombre. |
 | Facturación local | Wizor planea registrarse en México, Brasil y Uruguay, y ya puede facturar desde Argentina. Hoy todo se cobra desde la INC de EEUU vía Stripe. |
 
 ### Fuera de alcance

@@ -86,6 +86,16 @@ Se compran una vez, sin abono mensual, y **solo funcionan con un producto que lo
 - **Smart Desktop:** dispositivo fijo para espacios cerrados; se puede usar una o varias unidades por ambiente. Conectar y listo, completamente silencioso. Mide aire, COV, ruido, temperatura, luz y vibraciones, 24/7.
 - **Paneles de control:** el centro de monitoreo. Fatiga, estrés y calidad del aire en tiempo real: más de 200 variables, latencia menor a 1 segundo, en la nube o en las instalaciones del cliente, con análisis predictivo.
 
+
+**Fichas.** Cada servicio y cada equipo tiene un botón *Ver detalle* que abre una
+ficha al costado, con imagen, descripción y características. El panel entra por la
+izquierda a propósito: el total queda a la vista mientras se explica el producto.
+Con la tecla Escape o un clic afuera se cierra.
+
+El contenido de las fichas no vive en el catálogo de precios sino en su propia
+tabla, porque corregir una descripción no debería obligar a publicar una versión
+nueva del catálogo. Una ficha sin revisar se muestra marcada como provisoria.
+
 ## Preventa y seña
 
 **En preventa hoy:** {{preventa.productos}}, y los dispositivos {{preventa.equipos}}.
@@ -130,6 +140,7 @@ Se actualiza solo con cada publicación desde el back office.
 
 | Fecha | Cambio |
 |---|---|
+| 8 nov 2026 | Cada servicio y cada equipo tiene su ficha: imagen, descripción y características, en un panel que se abre al costado sin tapar el total. El contenido se edita aparte del catálogo de precios. |
 | 6 nov 2026 | El logo lleva a la guía desde cualquier pantalla (#7). |
 | 6 nov 2026 | Todo el sitio en español, inglés y portugués: cotizador, comisión, acceso y back office. El idioma elegido vale para todas las pantallas (#6). |
 | 6 nov 2026 | Guía del cotizador en la página de inicio, en español, inglés y portugués, con esta sección de versiones. |

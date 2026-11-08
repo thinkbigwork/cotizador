@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { currentUser } from '../../lib/auth.js';
 import { getPublished } from '../../lib/pricebook/repo.js';
 import { publicCatalog } from '../../lib/pricing/public-catalog.js';
+import { fichas } from '../../lib/contenido/repo.js';
 import Quoter from './Quoter.jsx';
 import Marca from '../Marca.jsx';
 import SelectorIdioma from '../SelectorIdioma.jsx';
@@ -36,7 +37,7 @@ export default async function VentasPage({ searchParams }) {
   let user = null;
   try { user = await currentUser(); } catch { /* el precio es público; la comisión no */ }
 
-  const book = await getPublished();
+  const [book, contenido] = await Promise.all([getPublished(), fichas()]);
   if (!book) {
     return <main className="q-empty"><p>{T.sinCatalogo}</p></main>;
   }
@@ -66,7 +67,7 @@ export default async function VentasPage({ searchParams }) {
         </div>
       )}
 
-      <Quoter catalog={publicCatalog(book.model)} lang={lang} presentation={presentation} />
+      <Quoter catalog={publicCatalog(book.model, contenido)} lang={lang} presentation={presentation} />
     </>
   );
 }

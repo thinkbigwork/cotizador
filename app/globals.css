@@ -181,10 +181,21 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
   max-width:var(--maxw);margin:0 auto;padding:26px var(--gutter) 80px;
   display:grid;grid-template-columns:minmax(0,1fr) 382px;gap:24px;align-items:start;
 }
-.q-wrap aside{position:sticky;top:18px}
+/* z-index 51 deja el panel de inversión POR ENCIMA del velo de la ficha: el
+   cliente sigue leyendo el total con la misma nitidez mientras mira el
+   detalle. Sin esto el velo lo atenúa y se pierde la única ventaja que el
+   panel lateral tiene sobre un modal. Como no se superponen —ficha a la
+   izquierda, total a la derecha—, elevarlo no tapa nada.
+   OJO: z-index sí aplica a los hijos de un grid aunque estén en static, así
+   que esto también elevaría el panel en pantallas angostas —donde la ficha es
+   una hoja a pantalla completa y el total tiene que quedar DEBAJO—. Por eso
+   la regla de abajo lo devuelve a auto en móvil. */
+.q-wrap aside{position:sticky;top:18px;z-index:51}
 @media(max-width:940px){
   .q-wrap{grid-template-columns:minmax(0,1fr)}
-  .q-wrap aside{position:static}
+  /* z-index:auto, no solo position:static: en un grid el apilado no depende
+     del posicionamiento, y sin esto el total se dibuja encima de la hoja. */
+  .q-wrap aside{position:static;z-index:auto}
 }
 .q-empty{max-width:var(--maxw);margin:0 auto;padding:60px var(--gutter);color:var(--fg3)}
 
@@ -403,3 +414,117 @@ h2{font-size:15px;font-weight:800;margin:0 0 12px;letter-spacing:-.2px}
 .acceso-idioma{display:flex;justify-content:center;margin-top:18px}
 .topbar .g-idiomas{margin-left:auto;margin-right:12px}
 @media print{.g-idiomas{display:none!important}}
+
+/* ==========================================================================
+   Fichas de catálogo — tarjeta con dos acciones, y el panel de detalle.
+   ========================================================================== */
+
+/* La tarjeta ya no es un botón: adentro conviven elegir el plan y abrir la
+   ficha. El botón de elegir ocupa toda la tarjeta menos el pie. */
+.plan-elegir{
+  display:block;width:100%;text-align:left;font:inherit;color:inherit;
+  background:transparent;border:0;padding:0;cursor:pointer;
+}
+.plan-elegir:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:var(--r-sm)}
+
+.plan-ficha,.dev-ficha{
+  margin-top:10px;font:inherit;font-size:12px;font-weight:700;letter-spacing:.3px;
+  background:transparent;border:0;padding:0;cursor:pointer;
+  color:var(--fg3);border-bottom:1px solid var(--line-str);
+}
+.plan-ficha:hover,.dev-ficha:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.dev-ficha{margin-top:6px;font-size:11.5px}
+
+/* Miniatura del equipo: abre la ficha y da una pista visual de qué es. */
+.dev-mini{
+  flex:none;width:64px;height:48px;padding:0;cursor:pointer;
+  border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:var(--deep);
+}
+.dev-mini img{display:block;width:100%;height:100%;object-fit:cover}
+.dev-mini:hover{border-color:var(--a40)}
+
+/* --- Panel de detalle --- */
+/* Entra por la IZQUIERDA, no por la derecha. Cubre la columna de
+   configuración —que es de donde salió el clic— y deja intacto el panel de
+   inversión de la derecha. Esa es toda la razón de ser de un panel lateral:
+   si tapara el precio, daría lo mismo un modal.
+   tests/ficha.test.mjs comprueba que el total no quede cubierto. */
+.ficha-fondo{
+  position:fixed;inset:0;z-index:50;background:rgba(0,10,22,.6);
+  backdrop-filter:blur(2px);display:flex;justify-content:flex-start;
+  animation:ficha-aparece .16s ease-out;
+}
+@keyframes ficha-aparece{from{opacity:0}to{opacity:1}}
+
+.ficha{
+  position:relative;width:min(460px,100%);height:100%;overflow-y:auto;
+  background:var(--deep);border-right:1px solid var(--a40);
+  animation:ficha-entra .22s cubic-bezier(.22,.61,.36,1);
+}
+@keyframes ficha-entra{from{transform:translateX(-24px);opacity:.4}to{transform:none;opacity:1}}
+.ficha:focus{outline:none}
+
+.ficha-x{
+  position:absolute;top:14px;right:14px;z-index:2;width:34px;height:34px;
+  border-radius:50%;border:1px solid var(--line-str);background:rgba(0,28,56,.75);
+  color:var(--fg);font-size:15px;line-height:1;cursor:pointer;
+}
+.ficha-x:hover{border-color:var(--accent);color:var(--accent)}
+
+.ficha-img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+
+.ficha-cuerpo{padding:22px}
+.ficha-cuerpo header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.ficha-cuerpo h2{font-size:21px;font-weight:800;letter-spacing:-.3px;margin:0}
+.ficha-precio{margin:0 0 14px;font-size:15px;font-weight:800;color:var(--accent)}
+.ficha-resumen{margin:0 0 18px;font-size:14.5px;line-height:1.6;color:var(--fg2)}
+
+.ficha-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.ficha-datos div{
+  background:var(--card2);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:12px 8px;text-align:center;
+}
+.ficha-datos b{display:block;font-size:19px;font-weight:900;color:var(--accent);letter-spacing:-.5px}
+.ficha-datos span{display:block;margin-top:3px;font-size:10.5px;color:var(--fg3);letter-spacing:.3px}
+
+.ficha-cuerpo h3{
+  font-size:10.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+  color:var(--accent);margin:0 0 10px;
+}
+.ficha-rasgos{margin:0;padding:0;list-style:none;font-size:14px}
+.ficha-rasgos li{
+  padding:9px 0 9px 20px;border-bottom:1px solid var(--line-soft);
+  color:var(--fg2);position:relative;line-height:1.5;
+}
+.ficha-rasgos li:last-child{border-bottom:0}
+.ficha-rasgos li::before{
+  content:'';position:absolute;left:2px;top:17px;width:7px;height:7px;
+  border-radius:50%;background:var(--accent);
+}
+
+.ficha-vacio{
+  margin:0;padding:14px;border:1px dashed var(--line-str);border-radius:var(--r-md);
+  font-size:13px;color:var(--fg3);line-height:1.55;
+}
+.ficha-nota{
+  margin:16px 0 0;padding:11px 13px;font-size:12.5px;line-height:1.5;
+  color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn-line);
+  border-radius:var(--r-md);
+}
+.ficha-borrador{
+  margin:16px 0 0;font-size:11px;letter-spacing:.3px;color:var(--fg3);
+  padding-top:12px;border-top:1px solid var(--line-soft);
+}
+
+/* En pantallas angostas, hoja completa desde abajo. */
+@media(max-width:620px){
+  .ficha-fondo{align-items:flex-end}
+  .ficha{
+    width:100%;height:92vh;border-right:0;border-top:1px solid var(--a40);
+    border-radius:var(--r-xl) var(--r-xl) 0 0;
+    animation:ficha-sube .24s cubic-bezier(.22,.61,.36,1);
+  }
+  @keyframes ficha-sube{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+}
+
+@media print{.ficha-fondo{display:none!important}}

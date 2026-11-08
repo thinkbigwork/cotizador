@@ -15,6 +15,7 @@
    ========================================================================== */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Ficha from './Ficha.jsx';
 import { STRINGS, NOTE_KEYS, SEGMENT_KEYS, PER_PERSON_UNIT } from '../../lib/i18n.js';
 
 const money = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
@@ -31,6 +32,9 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
   const [failed, setFailed] = useState(false);
 
   const seq = useRef(0);
+
+  /* Clave del ítem cuya ficha está abierta, o null. */
+  const [fichaDe, setFichaDe] = useState(null);
 
   const byGroup = useMemo(() => {
     const groups = new Map();
@@ -98,12 +102,28 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
     }
   }
 
+  /* El ítem de la ficha puede ser un servicio o un equipo. El precio se
+     muestra distinto: por persona y por mes uno, pago único el otro. */
+  const itemDeFicha = fichaDe
+    ? catalog.products.find((p) => p.key === fichaDe) ?? catalog.hardware.find((h) => h.key === fichaDe)
+    : null;
+
+  let precioDeFicha = null;
+  if (itemDeFicha) {
+    if (itemDeFicha.group) {
+      precioDeFicha = `${money(itemDeFicha.price)} · ${t.ficha.pago}`;
+    } else if (!result?.free && result?.plans?.[itemDeFicha.key]) {
+      precioDeFicha = `${money2(result.plans[itemDeFicha.key].perPersonMonth)} /${unit}`;
+    }
+  }
+
   const checkout = result?.checkout;
   const checkoutNote = checkout
     ? (t.ck[checkout.mode] || '').replace('{monto}', money(checkout.depositUsd ?? 0))
     : '';
 
   return (
+    <>
     <div className="q-wrap">
       <main>
         <section className="panel">
@@ -145,21 +165,31 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
               const on = Boolean(selected[p.key]);
               const plan = result?.plans?.[p.key];
               return (
-                <button key={p.key} type="button" className="plan" data-on={on ? 1 : 0}
-                  aria-pressed={on} onClick={() => toggleProduct(p.key)}>
-                  <h3>
-                    {p.name}
-                    <span className={`tag ${p.preOrder ? 'pre' : 'ok'}`}>
-                      {p.preOrder ? t.pre : t.avail}
-                    </span>
-                    <span className="price">
-                      {result?.free ? '—' : plan ? `${money2(plan.perPersonMonth)} /${unit}` : '…'}
-                    </span>
-                  </h3>
-                  {p.preOrder && p.waitlistNote?.[lang] && (
-                    <p className="prenote">{p.waitlistNote[lang]}</p>
+                /* La tarjeta NO es un botón: adentro hay dos acciones
+                   distintas —elegir el plan y abrir la ficha— y un botón
+                   dentro de otro es HTML inválido y un clic ambiguo. */
+                <div key={p.key} className="plan" data-on={on ? 1 : 0}>
+                  <button type="button" className="plan-elegir" aria-pressed={on}
+                    onClick={() => toggleProduct(p.key)}>
+                    <h3>
+                      {p.name}
+                      <span className={`tag ${p.preOrder ? 'pre' : 'ok'}`}>
+                        {p.preOrder ? t.pre : t.avail}
+                      </span>
+                      <span className="price">
+                        {result?.free ? '—' : plan ? `${money2(plan.perPersonMonth)} /${unit}` : '…'}
+                      </span>
+                    </h3>
+                    {p.preOrder && p.waitlistNote?.[lang] && (
+                      <p className="prenote">{p.waitlistNote[lang]}</p>
+                    )}
+                  </button>
+                  {p.ficha && (
+                    <button type="button" className="plan-ficha" onClick={() => setFichaDe(p.key)}>
+                      {t.ficha.ver}
+                    </button>
                   )}
-                </button>
+                </div>
               );
             })}
           </div>
@@ -170,12 +200,23 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
             <h2>{group === 'panel' ? t.panelT : t.t3}</h2>
             {items.map((h) => (
               <div className="dev" key={h.key}>
+                {h.ficha?.imagen && (
+                  <button type="button" className="dev-mini" onClick={() => setFichaDe(h.key)}
+                    aria-label={`${t.ficha.ver}: ${h.name}`}>
+                    <img src={h.ficha.imagen} alt="" width="1200" height="900" />
+                  </button>
+                )}
                 <div className="n">
                   <b>{h.name}</b>
                   <small>
                     {h.spec?.[lang]} · {money(h.price)}
                     {h.preOrder && <> · <span className="pre-mark">{t.pre.toLowerCase()}</span></>}
                   </small>
+                  {h.ficha && (
+                    <button type="button" className="dev-ficha" onClick={() => setFichaDe(h.key)}>
+                      {t.ficha.ver}
+                    </button>
+                  )}
                 </div>
                 <input type="number" min="0" step="1" value={hardware[h.key] ?? 0}
                   aria-label={h.name} onChange={(e) => setQty(h.key, e.target.value)} />
@@ -234,6 +275,19 @@ export default function Quoter({ catalog, lang = 'es', presentation }) {
         </div>
       </aside>
     </div>
+
+    {/* La ficha va FUERA de .q-wrap: es una capa superpuesta, no una columna
+        de la grilla. Adentro, al ser también un <aside>, la regla
+        `.q-wrap aside{position:static}` del móvil le ganaba en especificidad
+        y la hoja quedaba sin posicionar, con el total dibujado encima. */}
+    <Ficha
+      item={itemDeFicha}
+      lang={lang}
+      textos={{ ...t.ficha, preventa: t.pre }}
+      precio={precioDeFicha}
+      cerrar={() => setFichaDe(null)}
+    />
+    </>
   );
 }
 

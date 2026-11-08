@@ -5,6 +5,7 @@
 import { query, one } from '../../lib/db.js';
 import { PRICE_BOOK_V1 } from '../../lib/pricebook/seed-v1.js';
 import { validatePriceBook, readyToPublish } from '../../lib/pricebook/schema.js';
+import { sembrarContenido } from '../../lib/contenido/repo.js';
 
 const force = process.argv.includes('--publish');
 
@@ -15,9 +16,14 @@ if (!check.ok) {
   process.exit(1);
 }
 
+/* Las fichas viven en su propia tabla y no dependen de la versión del
+   catálogo, así que se cargan igual. No pisa lo que ya esté cargado. */
+const fichasNuevas = await sembrarContenido();
+if (fichasNuevas) console.log(`${fichasNuevas} ficha(s) de catálogo cargadas.`);
+
 const existing = await one('select version from price_books order by version desc limit 1');
 if (existing) {
-  console.log(`Ya hay catálogos cargados (última versión: v${existing.version}). No se hace nada.`);
+  console.log(`Ya hay catálogos cargados (última versión: v${existing.version}). No se hace nada más.`);
   process.exit(0);
 }
 
